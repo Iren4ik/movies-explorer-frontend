@@ -1,0 +1,138 @@
+.header {
+  padding: 18px 0;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+  align-items: center;
+}
+
+.header_pink {
+  background-color: #f3c1f8;
+}
+
+.header__menu-wrapper {
+  display: flex;
+}
+
+.header__menu {
+  display: flex;
+  gap: 50px;
+}
+
+.header__btns-container {
+  display: none;
+  width: 44px;
+  height: 44px;
+}
+
+.header__burger {
+  all: unset;
+  display: none;
+}
+
+.header__close-btn {
+  all: unset;
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header__container {
+    width: 87%;
+  }
+
+  .header__menu-overlay_active {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 2;
+  }
+
+  .header__menu-wrapper {
+    background-color: white;
+    position: fixed;
+    height: 100vh;
+    width: 67%;
+    top: 0;
+    right: -100%;
+    bottom: 0;
+    justify-content: center;
+    transition: var(--transition-menu);
+    z-index: 2;
+  }
+
+  .header__menu-wrapper_active {
+    right: 0;
+  }
+
+  .header__menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 159px;
+    margin-bottom: 92px;
+    max-width: 340px;
+    max-height: 75%;
+    align-content: space-between;
+  }
+
+  .header__btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .header__burger {
+    display: block;
+    cursor: pointer;
+    background-image: url("../../images/burger-menu.svg");
+    width: 44px;
+    height: 44px;
+  }
+
+  .header__close-btn {
+    display: block;
+    cursor: pointer;
+    background-image: url("../../images/close-burger-menu.svg");
+    width: 22px;
+    height: 22px;
+    background-size: contain;
+    margin: 22px;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    bottom: 0;
+    transition: var(--transition-menu);
+    z-index: 4;
+  }
+
+  .header__close-btn_active {
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .header__container {
+    width: 91%;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .header__menu-wrapper {
+    width: 100%;
+  }
+
+  .header__menu {
+    margin-top: 144px;
+    margin-bottom: 48px;
+    max-width: 300px;
+  }
+}
