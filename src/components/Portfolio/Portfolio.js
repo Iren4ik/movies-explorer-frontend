@@ -30,7 +30,7 @@ function Portfolio() {
           </li>
           <li className="portfolio__list-item">
             <a
-              href="https://mesto.irena.nomoredomainsrocks.ru"
+              href="https://github.com/Iren4ik/react-mesto-api-full-gha"
               target="_blank"
               className="portfolio__link"
               rel="noreferrer"

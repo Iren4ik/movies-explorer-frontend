@@ -8,11 +8,12 @@ function Navigation() {
     <nav className="navigation">
       <NavLink
         to="/"
-        className={
-          pathname === "/"
-            ? "navigation__link navigation__link_type_main navigation__link_active"
-            : "navigation__link"
-        }
+        className={`navigation__link navigation__link_type_main ${pathname === "/"
+        ? "navigation__link_active" : ""}`}
+        //   pathname === "/"
+        //     ? "navigation__link navigation__link_type_main navigation__link_active"
+        //     : "navigation__link"
+        // }
       >
         Главная
       </NavLink>
