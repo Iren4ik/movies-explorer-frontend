@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import "./Profile.css";
 
 function Profile({ user }) {
+  const [isEditProfile, setEditProfile] = useState(false);
+
+  const handleClickEditProfile = () => {
+    setEditProfile(true);
+  };
+
+  const handleClickSaveProfile = () => {
+    setEditProfile(false);
+  };
+
   return (
     <main className="profile">
       <h1 className="profile__title">Привет, {user.name}!</h1>
       <form className="profile__form" name="edit-profile">
         <div className="profile__info">
-        {/* <div className="profile__info profile__info-error"> */}
+        {/* Изменение оступа при ошибке в момент редактирования профиля */}
+        {/* <div className="profile__info profile__info-error">  */}
           <label className="profile__input-container profile__input-container_type_name">
             <p className="profile__text">Имя</p>
             <input
@@ -37,16 +49,36 @@ function Profile({ user }) {
         </div>
 
         <div className="profile__btns">
-          <button className="profile__btn profile__btn_type_edit" type="button">
-            Редактировать
-          </button>
-          <Link to="/signin" className="profile__btn profile__btn_type_logout">
-            Выйти из аккаунта
-          </Link>
+          {!isEditProfile && (
+            <>
+            <button 
+              className="profile__btn profile__btn_type_edit" 
+              type="button"
+              onClick={handleClickEditProfile}
+            >
+              Редактировать
+            </button>
+            <Link to="/signin" className="profile__btn profile__btn_type_logout">
+              Выйти из аккаунта
+            </Link>
+            </>
+          )}
+          {/* Вывод ошибки при редактировании профиля */}
           {/* <span className="profile__error">
             При обновлении профиля произошла ошибка.
           </span> */}
-          {/* <button className="profile__btn profile__btn_type_save" type="button"> */}
+
+          {/* Кнопка сохоанения после редактирования профиля */}
+          {isEditProfile && (
+          <button 
+            className="profile__btn profile__btn_type_save" 
+            type="button"
+            onClick={handleClickSaveProfile}
+          > 
+          Сохранить
+          </button>)}
+
+          {/* Неактивная кнопка сохранения */}
           {/* <button
             className="profile__btn profile__btn_type_save profile__btn_disable"
             type="button"

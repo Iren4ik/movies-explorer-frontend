@@ -64,7 +64,7 @@
     background-color: white;
     position: fixed;
     height: 100vh;
-    width: 67%;
+    width: 68%;
     top: 0;
     right: -100%;
     bottom: 0;
@@ -80,7 +80,7 @@
   .header__menu {
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 159px;
+    margin-top: 160px;
     margin-bottom: 92px;
     max-width: 340px;
     max-height: 75%;
@@ -100,16 +100,18 @@
     background-image: url("../../images/burger-menu.svg");
     width: 44px;
     height: 44px;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .header__close-btn {
     display: block;
     cursor: pointer;
     background-image: url("../../images/close-burger-menu.svg");
-    width: 22px;
-    height: 22px;
+    width: 35px;
+    height: 35px;
     background-size: contain;
-    margin: 22px;
+    margin: 21px;
     position: fixed;
     top: 0;
     right: -100%;
@@ -127,6 +129,12 @@
   .header__container {
     width: 91%;
   }
+
+  .header__burger {
+    width: 30px;
+    height: 40px;
+    padding-right: 8px;
+  }
 }
 
 @media screen and (max-width: 420px) {
@@ -138,5 +146,11 @@
     margin-top: 144px;
     margin-bottom: 48px;
     max-width: 300px;
+  }
+
+  .header__close-btn {
+    width: 30px;
+    height: 30px;
+    margin: 13px;
   }
 }

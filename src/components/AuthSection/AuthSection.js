@@ -25,14 +25,12 @@ function AuthSection({
               : "auth-section__space auth-section__space_two-input"
           }
         >
-          <span className="auth-section__error">{error}</span>
-          {/* <span className="auth-section__error auth-section__error_hidden">
-            При авторизации произошла ошибка. Токен не передан или передан не в
-            том формате.
-          </span> */}
+          {/* <span className="auth-section__error">{error}</span> */}
+          <span className="auth-section__error"></span>
           <button type="submit" className="auth-section__btn">
             {buttonText}
           </button>
+          {/* Неактивная кнопка */}
           {/* <button
             type="submit"
             className="auth-section__btn auth-section__btn_disabled"

@@ -1,7 +1,7 @@
 import "./AuthInput.css";
 
 function AuthInput({
-  isPassword,
+  isError,
   title,
   type,
   name,
@@ -16,8 +16,8 @@ function AuthInput({
       <p className="auth-input__caption">{title}</p>
       <input
         className={`auth-input__input ${
-          isPassword
-            ? "auth-input__input_valid_error auth-input__input_password"
+          isError
+            ? "auth-input__input_valid_error"
             : ""
         }`}
         type={type}

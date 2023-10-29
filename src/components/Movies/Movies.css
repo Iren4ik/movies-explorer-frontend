@@ -29,6 +29,7 @@
 
 @media screen and (max-width: 768px) {
   .movies__btn-more-container {
+    padding: 48px 0 90px;
     width: 92%;
   }
 }

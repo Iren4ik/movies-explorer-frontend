@@ -4,7 +4,7 @@ import AuthInput from "../AuthInput/AuthInput";
 import { useState } from "react";
 
 function Register({ user }) {
-  const [isPassword, setPassword] = useState(true);
+  const [isError, setError] = useState(true);
 
   return (
     <main className="register">
@@ -33,7 +33,7 @@ function Register({ user }) {
           error=""
         />
         <AuthInput
-          isPassword={isPassword}
+          isError={isError}
           title="Пароль"
           type="password"
           name="password"

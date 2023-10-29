@@ -13,7 +13,7 @@ function Movies({ movies }) {
       counter = { initial: 8, increase: 4 };
     }
     if (window.innerWidth <= 450) {
-      counter = { initial: 4, increase: 2 };
+      counter = { initial: 5, increase: 2 };
     }
     return counter;
   }

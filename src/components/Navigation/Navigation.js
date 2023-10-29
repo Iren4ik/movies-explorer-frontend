@@ -2,7 +2,7 @@ import "./Navigation.css";
 import { NavLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function Navigation() {
+function Navigation({onClick}) {
   const { pathname } = useLocation();
   return (
     <nav className="navigation">
@@ -19,10 +19,8 @@ function Navigation() {
       </NavLink>
       <NavLink
         to="/movies"
-        className={
-          pathname === "/movies"
-            ? "navigation__link navigation__link_active"
-            : "navigation__link"
+        className={`navigation__link ${pathname === "/movies"
+            ? "navigation__link_active" : ""}`
         }
       >
         Фильмы

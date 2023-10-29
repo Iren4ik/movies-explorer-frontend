@@ -7,20 +7,26 @@ import AuthLinks from "../AuthLinks/AuthLinks";
 import Logo from "../Logo/Logo";
 
 function Header({ isLoggedIn }) {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const [menu, setMenu] = useState(false);
 
   function handleOpenMenu() {
     setMenu(!menu);
   }
 
+  const headerMenu =
+  // pathname === "/" ||
+  pathname === "/movies" ||
+  pathname === "/saved-movies" ||
+  pathname === "/profile";
+
   return (
     <header
-      className={location.pathname === "/" ? "header header_pink" : "header"}
+      className={pathname === "/" ? "header header_pink" : "header"}
     >
       <div className="header__container">
         <Logo />
-        {!isLoggedIn && (
+        {isLoggedIn && headerMenu && (
           <>
             <div
               className={
@@ -59,7 +65,7 @@ function Header({ isLoggedIn }) {
             ></button>
           </>
         )}
-        {isLoggedIn && <AuthLinks />}
+        {isLoggedIn && pathname === "/" && <AuthLinks />}
       </div>
     </header>
   );

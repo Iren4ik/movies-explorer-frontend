@@ -1,6 +1,6 @@
 .movies-card-list {
   width: 90%;
-  margin: 70px auto 28px;
+  margin: 80px auto 28px;
 }
 
 .movies-card-list__not-found {
@@ -23,8 +23,8 @@
 
 @media screen and (max-width: 768px) {
   .movies-card-list {
-    width: 92%;
-    margin-bottom: 12px;
+    width: 96%;
+    margin: 80px auto 12px;
   }
 
   .movies-card-list__not-found {
@@ -34,14 +34,14 @@
 
   .movies-card-list__container {
     grid-template-columns: repeat(auto-fit, 339px);
-    gap: 47px 30px;
+    gap: 46px 30px;
   }
 }
 
 @media screen and (max-width: 540px) {
   .movies-card-list {
     width: 93.7%;
-    margin: 40px auto 13px;
+    margin: 50px auto 13px;
   }
 
   .movies-card-list__not-found {
@@ -51,6 +51,6 @@
 
   .movies-card-list__container {
     grid-template-columns: repeat(auto-fit, 300px);
-    gap: 39px;
+    gap: 37px;
   }
 }

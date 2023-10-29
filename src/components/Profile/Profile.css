@@ -17,12 +17,12 @@
 }
 
 .profile__info {
-  margin: 123px 0 220px;
+  margin: 124px 0 220px;
   width: 100%;
 }
 
 .profile__info-error {
-  margin-bottom: 189px;
+  margin-bottom: 190px;
 }
 
 .profile__input-container {
@@ -31,12 +31,12 @@
 }
 
 .profile__input-container_type_name {
-  padding-bottom: 16px;
+  padding-bottom: 17px;
   border-bottom: 1px solid #e8e8e8;
 }
 
 .profile__input-container_type_email {
-  padding-top: 17px;
+  padding-top: 18px;
 }
 
 /* .profile__input {
@@ -107,7 +107,7 @@
   width: 410px;
   height: 45px;
   border-radius: 3px;
-  background: #3456f3;
+  background: #000;
   color: #fff;
   font-size: 14px;
   font-weight: 500;
@@ -121,7 +121,7 @@
 
 @media screen and (max-width: 768px) {
   .profile {
-    margin: 236px auto 269px;
+    margin: 231px auto 269px;
   }
 
   .profile__info {

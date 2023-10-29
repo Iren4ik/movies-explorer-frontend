@@ -14,22 +14,25 @@
   transition: var(--transition);
 }
 
-.navigation__link_type_main {
-  display: none;
-}
 
 .navigation__link:hover {
   opacity: var(--link-opacity);
 }
 
+
+.navigation__link_type_main {
+  display: none;
+}
+
 .navigation__link_active {
   font-weight: 500;
+  opacity: 1;
 }
 
 @media screen and (max-width: 768px) {
   .navigation {
     flex-direction: column;
-    gap: 28px;
+    gap: 27px;
   }
 
   .navigation__link {
