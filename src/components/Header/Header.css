@@ -5,7 +5,7 @@
 .header__container {
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 89%;
   margin: auto;
   align-items: center;
 }
@@ -40,8 +40,12 @@
 }
 
 @media screen and (max-width: 768px) {
+  .header {
+    padding-top: 18px;
+  }
+
   .header__container {
-    width: 87%;
+    width: 92%;
   }
 
   .header__menu-overlay_active {

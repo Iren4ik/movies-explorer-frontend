@@ -3,7 +3,7 @@
 }
 
 .techs-container {
-  width: 90%;
+  width: 89%;
   margin: auto;
 }
 
@@ -90,7 +90,7 @@
   }
 
   .techs__title {
-    padding: 60px 0 24px;
+    padding: 61px 0 25px;
     font-size: 30px;
     letter-spacing: -1.2px;
   }

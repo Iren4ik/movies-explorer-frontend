@@ -7,6 +7,8 @@
   --btn-opacity: 0.8;
   --transition: opacity 0.1s linear;
   --transition-menu: right 0.4s linear;
+  --focus-search: 0px 3px 14px 0px rgba(0, 0, 0, 0.2);
+  --focus-input: 0px 3px 14px 0px rgba(0, 0, 0, 0.1);
 }
 
 .App {

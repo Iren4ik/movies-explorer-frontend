@@ -20,7 +20,7 @@ function Header({ isLoggedIn }) {
     >
       <div className="header__container">
         <Logo />
-        {isLoggedIn && (
+        {!isLoggedIn && (
           <>
             <div
               className={
@@ -59,7 +59,7 @@ function Header({ isLoggedIn }) {
             ></button>
           </>
         )}
-        {!isLoggedIn && <AuthLinks />}
+        {isLoggedIn && <AuthLinks />}
       </div>
     </header>
   );

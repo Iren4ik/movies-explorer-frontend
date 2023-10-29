@@ -1,6 +1,6 @@
 .section-header__header-container {
   border-bottom: 1px solid #000;
-  padding: 100px 0 23px;
+  padding: 101px 0 23px;
 }
 
 .section-header__header {
@@ -13,5 +13,16 @@
 @media screen and (max-width: 768px) {
   .section-header__header-container {
     padding: 90px 0 23px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .section-header__header-container {
+    padding: 70px 0 28px;
+  }
+
+  .section-header__header {
+    font-size: 18px;
+    letter-spacing: -0.72px;
   }
 }
