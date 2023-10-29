@@ -67,8 +67,6 @@ function Profile({ user }) {
           {/* <span className="profile__error">
             При обновлении профиля произошла ошибка.
           </span> */}
-
-          {/* Кнопка сохоанения после редактирования профиля */}
           {isEditProfile && (
           <button 
             className="profile__btn profile__btn_type_save" 

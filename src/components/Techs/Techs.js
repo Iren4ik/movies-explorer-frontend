@@ -3,7 +3,7 @@ import SectionHeader from "../SectionHeader/SectionHeader";
 
 function Techs() {
   return (
-    <section className="techs" id={"techs"}>
+    <section className="techs" id="techs">
       <div className="techs-container">
         <SectionHeader title="Технологии" />
         <h3 className="techs__title">7 технологий</h3>
