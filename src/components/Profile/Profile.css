@@ -28,6 +28,9 @@
 .profile__input-container {
   display: flex;
   justify-content: space-between;
+  font-size: 11px;
+  font-weight: 500;
+  margin: 0;
 }
 
 .profile__input-container_type_name {
@@ -47,12 +50,6 @@
   all: unset;
   width: 85%;
   text-align: right;
-}
-
-.profile__text {
-  font-size: 11px;
-  font-weight: 500;
-  margin: 0;
 }
 
 .profile__text:focus {

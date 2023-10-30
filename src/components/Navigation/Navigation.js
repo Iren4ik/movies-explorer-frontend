@@ -2,26 +2,25 @@ import "./Navigation.css";
 import { NavLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function Navigation({onClick}) {
+function Navigation({ onClick }) {
   const { pathname } = useLocation();
   return (
     <nav className="navigation">
       <NavLink
         to="/"
-        className={`navigation__link navigation__link_type_main ${pathname === "/"
-        ? "navigation__link_active" : ""}`}
-        //   pathname === "/"
-        //     ? "navigation__link navigation__link_type_main navigation__link_active"
-        //     : "navigation__link"
-        // }
+        className={`navigation__link navigation__link_type_main ${
+          pathname === "/" ? "navigation__link_active" : ""
+        }`}
+        onClick={onClick}
       >
         Главная
       </NavLink>
       <NavLink
         to="/movies"
-        className={`navigation__link ${pathname === "/movies"
-            ? "navigation__link_active" : ""}`
-        }
+        className={`navigation__link ${
+          pathname === "/movies" ? "navigation__link_active" : ""
+        }`}
+        onClick={onClick}
       >
         Фильмы
       </NavLink>
@@ -32,6 +31,7 @@ function Navigation({onClick}) {
             ? "navigation__link navigation__link_active"
             : "navigation__link"
         }
+        onClick={onClick}
       >
         Сохранённые фильмы
       </NavLink>

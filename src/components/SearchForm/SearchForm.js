@@ -11,8 +11,8 @@ function SearchForm() {
 
   return (
     <section className="search">
-      <div className="search__form-wrapper">
-        <form action="" className="search__form">
+      <form className="search__form-wrapper" action="#" name="search-form">
+        <div className="search__form">
           <div className="search__input-container">
             <div className="search__icon"></div>
             <div className="search__input-wrapper">
@@ -20,16 +20,19 @@ function SearchForm() {
                 type="text"
                 className="search__input"
                 placeholder="Фильм"
+                required
               />
             </div>
           </div>
-          <button className="search__btn">Найти</button>
-        </form>
+          <button className="search__btn" type="submit">
+            Найти
+          </button>
+        </div>
         <div className="search__filter-container">
           <FilterCheckbox isFilter={isFilter} onChange={handleFilterChange} />
           <p className="search__filter-title">Короткометражки</p>
         </div>
-      </div>
+      </form>
     </section>
   );
 }

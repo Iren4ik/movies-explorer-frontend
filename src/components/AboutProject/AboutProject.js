@@ -35,7 +35,7 @@ function AboutProject() {
             Back-end
           </p>
         </div>
-        <div className="about-project_stage about-project__stage_type_front">
+        <div className="about-project__stage about-project__stage_type_front">
           <p className="about-project__stage-text about-project__stage-text_color_black">
             4 недели
           </p>

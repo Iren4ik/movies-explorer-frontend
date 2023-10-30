@@ -10,10 +10,12 @@
   --duration: 0.3s cubic-bezier(0.47, 1.64, 0.41, 0.8),
     background-color 0.2s linear;
   cursor: pointer;
+  transition: var(--transition);
 }
 
 .checkbox:hover .checkbox__div::before {
-  transform: scale(0.9);
+  /* transform: scale(0.9); */
+  opacity: var(--btn-opacity);
 }
 
 .checkbox__input {

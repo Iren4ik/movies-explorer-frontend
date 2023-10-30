@@ -8,6 +8,7 @@ function FilterCheckbox({ isFilter, onChange }) {
         className="checkbox__input"
         cheked={isFilter}
         onChange={onChange}
+        name="checkbox"
       />
       <span className="checkbox__div"></span>
     </label>

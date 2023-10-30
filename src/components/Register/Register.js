@@ -10,6 +10,7 @@ function Register({ user }) {
     <main className="register">
       <AuthSection
         title="Добро пожаловать!"
+        name="register-form"
         error=""
         buttonText="Зарегистрироваться"
         text="Уже зарегистрированы?"
@@ -23,6 +24,7 @@ function Register({ user }) {
           minLength="2"
           maxLength="30"
           value={user.name}
+          placeholder="Введите имя"
           error=""
         />
         <AuthInput
@@ -30,6 +32,7 @@ function Register({ user }) {
           type="email"
           name="email"
           value={user.email}
+          placeholder="Введите e-mail"
           error=""
         />
         <AuthInput
@@ -40,6 +43,7 @@ function Register({ user }) {
           minLength="8"
           maxLength="20"
           value={user.password}
+          placeholder="Введите пароль"
           error="Что-то пошло не так..."
         />
       </AuthSection>

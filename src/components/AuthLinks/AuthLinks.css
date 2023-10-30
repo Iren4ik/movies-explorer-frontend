@@ -39,7 +39,7 @@
   opacity: var(--btn-opacity);
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 540px) {
   .authLinks {
     gap: 14px;
     font-size: 10px;

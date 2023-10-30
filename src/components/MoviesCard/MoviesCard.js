@@ -15,14 +15,19 @@ function MoviesCard({ movie }) {
 
   return (
     <li className="movies-card">
-      <a className="movies-card__link" href={movie.trailerLink} target="_blank" rel="noreferrer">
+      <a
+        className="movies-card__link"
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noreferrer"
+      >
         <img
           className="movies-card__img"
           src={movie.link}
           alt={`Заставка для фильма "${movie.name}"`}
         />
         <div className="movies-card__caption">
-          <p className="movies-card__title">{movie.name}</p>
+          <h2 className="movies-card__title">{movie.name}</h2>
           <div className="movies-card__duration-wrapper">
             <p className="movies-card__duration">{movie.duration}</p>
           </div>

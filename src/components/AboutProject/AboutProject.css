@@ -106,15 +106,15 @@
   .about-project__timeline {
     padding-bottom: 84px;
   }
-  
+
   .about-project__stage_type_back {
     width: 21%;
   }
-  
+
   .about-project__stage_type_front {
     width: 79%;
   }
-  
+
   .about-project__stage-text_color_grey {
     padding-top: 15px;
   }
@@ -129,6 +129,7 @@
 
   .about-project__info {
     min-width: 284px;
+    max-width: 100%;
     gap: 17px;
   }
 

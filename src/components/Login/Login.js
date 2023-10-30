@@ -7,6 +7,7 @@ function Login({ user }) {
     <main className="login">
       <AuthSection
         title="Рады видеть!"
+        name="login-form"
         error="При авторизации произошла ошибка. Токен не передан 
         или передан не в том формате."
         buttonText="Войти"
@@ -19,6 +20,7 @@ function Login({ user }) {
           type="email"
           name="email"
           value={user.email}
+          placeholder="Введите e-mail"
           error=""
         />
         <AuthInput
@@ -28,6 +30,7 @@ function Login({ user }) {
           minLength="8"
           maxLength="20"
           value=""
+          placeholder="Введите пароль"
           error=""
         />
       </AuthSection>

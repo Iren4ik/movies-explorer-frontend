@@ -4,6 +4,7 @@ import Logo from "../Logo/Logo";
 
 function AuthSection({
   title,
+  name,
   children,
   error,
   buttonText,
@@ -16,7 +17,7 @@ function AuthSection({
     <section className="auth-section">
       <Logo />
       <h1 className="auth-section__title">{title}</h1>
-      <form className="auth-section__form">
+      <form className="auth-section__form" action="#" name={name}>
         <div className="auth-section__input-container">{children}</div>
         <div
           className={

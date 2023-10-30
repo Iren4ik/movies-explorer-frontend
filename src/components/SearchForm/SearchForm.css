@@ -92,10 +92,15 @@
   margin: 0;
 }
 
+@media screen and (max-width: 860px) {
+  .search {
+    padding: 74px 0 109px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .search {
     width: 92%;
-    padding: 74px 0 109px;
   }
 
   .search__icon {

@@ -48,6 +48,7 @@ function Movies({ movies }) {
       <MoviesCardList movies={moviesForRender} />
       <div className="movies__btn-more-container">
         <button
+          type="button"
           className={`movies__btn-more ${
             count >= movies.length && "movies__btn-more_hidden"
           }`}

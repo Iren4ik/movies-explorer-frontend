@@ -102,6 +102,11 @@
     height: 44px;
     background-size: contain;
     background-repeat: no-repeat;
+    transition: var(--transition);
+  }
+
+  .header__burger:hover {
+    opacity: var(--btn-opacity);
   }
 
   .header__close-btn {
@@ -118,6 +123,10 @@
     bottom: 0;
     transition: var(--transition-menu);
     z-index: 4;
+  }
+
+  .header__close-btn:hover {
+    opacity: var(--btn-opacity);
   }
 
   .header__close-btn_active {

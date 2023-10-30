@@ -1,11 +1,11 @@
 import "./ProfileLink.css";
 import { Link, useLocation } from "react-router-dom";
 
-function ProfileLink() {
+function ProfileLink({ onClick }) {
   const location = useLocation();
   return (
-    <div className="profileLink">
-      <Link to="/profile" className="profileLink__link">
+    <nav className="profileLink">
+      <Link to="/profile" className="profileLink__link" onClick={onClick}>
         Аккаунт
         <div
           className={
@@ -23,7 +23,7 @@ function ProfileLink() {
           ></div>
         </div>
       </Link>
-    </div>
+    </nav>
   );
 }
 

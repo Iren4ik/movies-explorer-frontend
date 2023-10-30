@@ -12,19 +12,18 @@ function AuthInput({
   error,
 }) {
   return (
-    <label className="auth-input__container">
-      <p className="auth-input__caption">{title}</p>
+    <label className="auth-input">
+      {title}
       <input
         className={`auth-input__input ${
-          isError
-            ? "auth-input__input_valid_error"
-            : ""
+          isError ? "auth-input__input_valid_error" : ""
         }`}
         type={type}
         name={name}
         minLength={minLength}
         maxLength={maxLength}
         value={value}
+        placeholder={placeholder}
         required
       />
       <span className="auth-input__error">{error}</span>

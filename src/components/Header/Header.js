@@ -15,15 +15,13 @@ function Header({ isLoggedIn }) {
   }
 
   const headerMenu =
-  // pathname === "/" ||
-  pathname === "/movies" ||
-  pathname === "/saved-movies" ||
-  pathname === "/profile";
+    // pathname === "/" ||
+    pathname === "/movies" ||
+    pathname === "/saved-movies" ||
+    pathname === "/profile";
 
   return (
-    <header
-      className={pathname === "/" ? "header header_pink" : "header"}
-    >
+    <header className={pathname === "/" ? "header header_pink" : "header"}>
       <div className="header__container">
         <Logo />
         {isLoggedIn && headerMenu && (
@@ -43,8 +41,8 @@ function Header({ isLoggedIn }) {
                 }
               >
                 <div className="header__menu">
-                  <Navigation />
-                  <ProfileLink />
+                  <Navigation onClick={handleOpenMenu} />
+                  <ProfileLink onClick={handleOpenMenu}/>
                 </div>
               </div>
             </div>
