@@ -1,0 +1,124 @@
+.techs {
+  background: #f5f5f5;
+}
+
+.techs-container {
+  width: 89%;
+  margin: auto;
+}
+
+.techs__title {
+  margin: 0;
+  text-align: center;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -2px;
+  padding: 90px 0 26px;
+}
+
+.techs__text {
+  display: block;
+  margin: 0 auto;
+  max-width: 460px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: -0.56px;
+}
+
+.techs__list {
+  margin: 0 auto;
+  list-style: none;
+  padding: 100px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 90px);
+  gap: 10px;
+  justify-content: center;
+}
+
+.techs__list-item {
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #e8e8e8;
+}
+
+.techs__list-item-text {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.56px;
+}
+
+@media screen and (max-width: 768px) {
+  .techs-container {
+    width: 87%;
+  }
+
+  .techs__title {
+    padding: 80px 0 22px;
+  }
+
+  .techs__text {
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: -0.48px;
+  }
+
+  .techs__list {
+    padding: 83px 0 90px;
+    grid-template-columns: repeat(auto-fit, 84px);
+  }
+
+  .techs__list-item {
+    min-height: 57px;
+  }
+
+  .techs__list-item-text {
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .techs-container {
+    width: 89%;
+  }
+
+  .techs__title {
+    padding: 61px 0 25px;
+    font-size: 30px;
+    letter-spacing: -1.2px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .techs {
+    background: #fff;
+  }
+
+  .techs__text {
+    font-size: 11px;
+    line-height: 1.45;
+    letter-spacing: -0.44px;
+  }
+
+  .techs__list {
+    padding: 50px 0 70px;
+    max-width: 250px;
+  }
+
+  .techs__list-item {
+    min-height: 57px;
+    background-color: #e8e8e8;
+  }
+
+  .techs__list-item-text {
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}

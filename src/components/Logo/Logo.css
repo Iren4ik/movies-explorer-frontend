@@ -1,0 +1,17 @@
+.logo {
+  width: max-content;
+  display: flex;
+  text-decoration: none;
+}
+
+.logo__icon {
+  background-image: url("../../images/logo.svg");
+  width: 38px;
+  height: 38px;
+  margin: auto;
+  transition: var(--transition);
+}
+
+.logo__icon:hover {
+  opacity: var(--btn-opacity);
+}

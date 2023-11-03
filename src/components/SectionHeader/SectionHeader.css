@@ -1,0 +1,28 @@
+.section-header {
+  border-bottom: 1px solid #000;
+  padding: 101px 0 23px;
+}
+
+.section-header__header {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.88px;
+}
+
+@media screen and (max-width: 768px) {
+  .section-header {
+    padding: 90px 0 23px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .section-header {
+    padding: 70px 0 28px;
+  }
+
+  .section-header__header {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+}

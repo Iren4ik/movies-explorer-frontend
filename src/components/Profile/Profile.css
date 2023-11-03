@@ -1,0 +1,142 @@
+.profile {
+  width: 410px;
+  margin: 74px auto 70px;
+}
+
+.profile__title {
+  margin: 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__info {
+  margin: 124px 0 220px;
+  width: 100%;
+}
+
+.profile__info-error {
+  margin-bottom: 190px;
+}
+
+.profile__input-container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.profile__input-container_type_name {
+  padding-bottom: 17px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.profile__input-container_type_email {
+  padding-top: 18px;
+}
+
+/* .profile__input {
+  display: block;
+} */
+
+.profile__text_input {
+  all: unset;
+  width: 85%;
+  text-align: right;
+}
+
+.profile__text:focus {
+  font-weight: 600;
+}
+
+.profile__btns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile__btn {
+  all: unset;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.profile__btn_type_edit {
+  transition: var(--transition);
+}
+
+.profile__btn_type_logout {
+  color: #ff004d;
+  transition: var(--transition);
+}
+
+.profile__btn_type_logout:hover,
+.profile__btn_type_edit:hover {
+  opacity: var(--link-opacity);
+}
+
+.profile__btn_type_save {
+  transition: var(--transition);
+}
+
+.profile__btn_type_save:hover {
+  opacity: var(--btn-opacity);
+}
+
+.profile__error {
+  margin-bottom: 4px;
+  color: #ff004c;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.profile__btn_type_save {
+  width: 410px;
+  height: 45px;
+  border-radius: 3px;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.profile__btn_disable {
+  background: #f8f8f8;
+  color: #c2c2c2;
+  cursor: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    margin: 231px auto 269px;
+  }
+
+  .profile__info {
+    margin: 96px 0 210px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .profile {
+    margin: 70px auto 40px;
+    width: 81%;
+  }
+
+  .profile__info {
+    margin: 80px 0 379px;
+  }
+
+  .profile__btn_type_save {
+    width: 81%;
+  }
+}
