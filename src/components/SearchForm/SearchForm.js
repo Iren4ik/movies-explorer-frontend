@@ -1,9 +1,26 @@
-import { useState } from "react";
 import "./SearchForm.css";
+import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+// import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-function SearchForm() {
+function SearchForm({ onSearch }) {
   const [isFilter, setFilter] = useState(false);
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const [searchError, setSearchError] = useState("");
+
+  useEffect(() => {
+    setSearchError("");
+  }, [searchInputValue]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (searchInputValue) {
+      onSearch(searchInputValue);
+      setSearchError("");
+    } else {
+      setSearchError("Нужно ввести ключевое слово");
+    }
+  }
 
   const handleFilterChange = () => {
     setFilter(!isFilter);
@@ -11,16 +28,19 @@ function SearchForm() {
 
   return (
     <section className="search">
-      <form className="search__form-wrapper" action="#" name="search-form">
+      <form className="search__form-wrapper" action="#" name="search-form" onSubmit={handleSubmit} noValidate>
         <div className="search__form">
           <div className="search__input-container">
             <div className="search__icon"></div>
             <div className="search__input-wrapper">
               <input
                 type="text"
+                name="search"
                 className="search__input"
                 placeholder="Фильм"
                 required
+                value={searchInputValue || ''}
+                onChange={(e) => setSearchInputValue(e.target.value)}
               />
             </div>
           </div>
@@ -33,6 +53,7 @@ function SearchForm() {
           <p className="search__filter-title">Короткометражки</p>
         </div>
       </form>
+      <span className="search__error search__error_active">{searchError}</span>
     </section>
   );
 }

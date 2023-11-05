@@ -1,11 +1,46 @@
 import "./Movies.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import * as moviesApi from "../../utils/MoviesApi";
 
-function Movies({ movies }) {
+
+function Movies() {
+    // Функционал для поиска
+  const [allMovies, setAllMovies] = useState([]);
+  // const [movies, setMovies] = useState([]);ы
+  const [filteredMovies, setFilteredMovies] = useState([])
+
+  const filter = useCallback((dataMovies, keyWord) => {
+    setFilteredMovies(dataMovies.filter((movie) => {
+      const searchQueryRU = movie.nameRU.toLowerCase().trim().includes(keyWord.toLowerCase().trim());
+      const searchQueryEN = movie.nameEN.toLowerCase().trim().includes(keyWord.toLowerCase().trim());
+      return (searchQueryRU || searchQueryEN);
+    }))
+  }, [])
+
+  //Запрос на получение фильмов
+  const hundleSearchSubmit = useCallback((searchQuery) => {
+    if (!allMovies.length) {
+      moviesApi.getMovies()
+        .then((dataMovies) => {
+          setAllMovies(dataMovies)
+          filter(dataMovies, searchQuery)
+        })
+      .catch((err) => {
+        console.error(`Во время запроса произошла ошибка. Возможно, 
+        проблема с соединением или сервер недоступен. Подождите 
+        немного и попробуйте ещё раз`)
+      })
+    } 
+    else { 
+      filter(allMovies, searchQuery)
+    }
+  }, [filter, allMovies])
+
+  //Функционал кнопки ЕЩЕ
   const [count, setCount] = useState(renderMoreMovies().initial);
-  const moviesForRender = movies.slice(0, count);
+  const moviesForRender = filteredMovies.slice(0, count);
 
   function renderMoreMovies() {
     let counter = { initial: 12, increase: 4 };
@@ -36,7 +71,7 @@ function Movies({ movies }) {
     }
     window.addEventListener("resize", reRenderMovies);
     return () => window.removeEventListener("resize", reRenderMovies);
-  }, [movies]);
+  }, [filteredMovies]);
 
   function openMoreMovies() {
     setCount(count + renderMoreMovies().increase);
@@ -44,13 +79,13 @@ function Movies({ movies }) {
 
   return (
     <main className="movies">
-      <SearchForm />
+      <SearchForm onSearch={hundleSearchSubmit}/>
       <MoviesCardList movies={moviesForRender} />
       <div className="movies__btn-more-container">
         <button
           type="button"
           className={`movies__btn-more ${
-            count >= movies.length && "movies__btn-more_hidden"
+            count >= allMovies.length && "movies__btn-more_hidden"
           }`}
           onClick={openMoreMovies}
         >

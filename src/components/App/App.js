@@ -1,6 +1,6 @@
 import './App.css';
 import userData from "../../utils/user.js";
-import moviesData from "../../utils/movies.js";
+// import moviesData from "../../utils/movies.js";
 import React, { useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "../Header/Header";
@@ -31,10 +31,11 @@ function App() {
       {header && <Header isLoggedIn={isLoggedIn} />}
       <Routes>
         <Route path="/" element={<Main user={userData} />} />
-        <Route path="/movies" element={<Movies movies={moviesData} />} />
+        <Route path="/movies" 
+          element={<Movies />} />
         <Route
           path="/saved-movies"
-          element={<SavedMovies movies={moviesData} />}
+          element={<SavedMovies />}
         />
         <Route path="/profile" element={<Profile user={userData} />} />
         <Route path="/signup" element={<Register user={userData} />} />
