@@ -1,31 +1,44 @@
 import "./Movies.css";
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import * as moviesApi from "../../utils/MoviesApi";
 
 
 function Movies() {
-    // Функционал для поиска
+  const { pathname } = useLocation();
+
+    // ПОИСК ФИЛЬМОВ
   const [allMovies, setAllMovies] = useState([]);
-  // const [movies, setMovies] = useState([]);ы
-  const [filteredMovies, setFilteredMovies] = useState([])
+  const [moviesForRender, setMoviesForRender] = useState([])
+  const [inputSearchValue, setInputSearchValue] = useState([])
+    // const [filteredMovies, setFilteredMovies] = useState([])
 
-  const filter = useCallback((dataMovies, keyWord) => {
-    setFilteredMovies(dataMovies.filter((movie) => {
-      const searchQueryRU = movie.nameRU.toLowerCase().trim().includes(keyWord.toLowerCase().trim());
-      const searchQueryEN = movie.nameEN.toLowerCase().trim().includes(keyWord.toLowerCase().trim());
+  // поиск и фильтрация фильмов
+  const searchAndFilterMovies = useCallback((dataMovies, keyWord) => {
+    const searchQuery = keyWord.toLowerCase().trim();
+    const result = dataMovies.filter((movie) => {
+      const searchQueryRU = movie.nameRU.toLowerCase().trim().includes(searchQuery);
+      const searchQueryEN = movie.nameEN.toLowerCase().trim().includes(searchQuery);
       return (searchQueryRU || searchQueryEN);
-    }))
-  }, [])
+    })
+    setMoviesForRender(result)
+    if (pathname === "/movies") {
+      localStorage.setItem("foundMovies", JSON.stringify(result));
+      localStorage.setItem("moviesSearchQuery", JSON.stringify(searchQuery));
+    }
+  }, [pathname])
 
-  //Запрос на получение фильмов
-  const hundleSearchSubmit = useCallback((searchQuery) => {
-    if (!allMovies.length) {
+  // запрос на получение фильмов
+  const submitSearchRequest = useCallback((searchQuery) => {
+  const storedAllMovies = localStorage.getItem("allMovies");
+    if (!storedAllMovies) {
       moviesApi.getMovies()
         .then((dataMovies) => {
-          setAllMovies(dataMovies)
-          filter(dataMovies, searchQuery)
+          localStorage.setItem("allMovies", JSON.stringify(dataMovies));
+          setAllMovies(dataMovies);
+          searchAndFilterMovies(dataMovies, searchQuery);
         })
       .catch((err) => {
         console.error(`Во время запроса произошла ошибка. Возможно, 
@@ -34,13 +47,23 @@ function Movies() {
       })
     } 
     else { 
-      filter(allMovies, searchQuery)
+      setAllMovies(JSON.parse(storedAllMovies));
+      searchAndFilterMovies(JSON.parse(storedAllMovies), searchQuery);
     }
-  }, [filter, allMovies])
+  }, [searchAndFilterMovies])
 
-  //Функционал кнопки ЕЩЕ
+  useEffect(() => {
+    if (localStorage.getItem("foundMovies") && localStorage.getItem("moviesSearchQuery")) {
+      const moviesFromLStorage = JSON.parse(localStorage.getItem("foundMovies"));
+      const queryFromLStorage = JSON.parse(localStorage.getItem("moviesSearchQuery"));
+      setMoviesForRender(moviesFromLStorage);
+      setInputSearchValue(queryFromLStorage);
+    }
+  }, [])
+
+  // КНОПКА ЕЩЕ
   const [count, setCount] = useState(renderMoreMovies().initial);
-  const moviesForRender = filteredMovies.slice(0, count);
+  const visibleMovies = moviesForRender.slice(0, count);
 
   function renderMoreMovies() {
     let counter = { initial: 12, increase: 4 };
@@ -71,7 +94,7 @@ function Movies() {
     }
     window.addEventListener("resize", reRenderMovies);
     return () => window.removeEventListener("resize", reRenderMovies);
-  }, [filteredMovies]);
+  }, [moviesForRender]);
 
   function openMoreMovies() {
     setCount(count + renderMoreMovies().increase);
@@ -79,8 +102,8 @@ function Movies() {
 
   return (
     <main className="movies">
-      <SearchForm onSearch={hundleSearchSubmit}/>
-      <MoviesCardList movies={moviesForRender} />
+      <SearchForm onSearch={submitSearchRequest} inputValue={inputSearchValue}/>
+      <MoviesCardList movies={visibleMovies} />
       <div className="movies__btn-more-container">
         <button
           type="button"

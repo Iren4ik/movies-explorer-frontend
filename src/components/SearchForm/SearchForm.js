@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 // import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-function SearchForm({ onSearch }) {
+function SearchForm({ onSearch, inputValue }) {
   const [isFilter, setFilter] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
+    setSearchInputValue(inputValue);
     setSearchError("");
-  }, [searchInputValue]);
+  }, [inputValue]);
 
   function handleSubmit(e) {
     e.preventDefault();
