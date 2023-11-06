@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 // import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange }) {
+function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoading }) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
@@ -14,7 +14,7 @@ function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (searchInputValue) {
+    if (searchInputValue.length !== 0) {
       onSearch(searchInputValue);
       setSearchError("");
     } else {
@@ -37,10 +37,14 @@ function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange }) {
                 required
                 value={searchInputValue || ''}
                 onChange={(e) => setSearchInputValue(e.target.value)}
+                disabled={isLoading ? true : false}
               />
             </div>
           </div>
-          <button className="search__btn" type="submit">
+          <button 
+            className={`search__btn ${isLoading ? "search__btn_disable" :''}`} 
+            type="submit" 
+            disabled={isLoading ? true : false}>
             Найти
           </button>
         </div>

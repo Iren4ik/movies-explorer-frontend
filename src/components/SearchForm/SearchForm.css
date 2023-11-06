@@ -72,6 +72,11 @@
   transition: var(--transition);
 }
 
+.search__btn_disable {
+  cursor: auto;
+  background: #a0a0a0;
+}
+
 .search__btn:hover {
   opacity: var(--btn-opacity);
 }

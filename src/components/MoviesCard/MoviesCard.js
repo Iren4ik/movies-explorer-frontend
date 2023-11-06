@@ -34,13 +34,10 @@ function MoviesCard({ movie }) {
       >
         <img
           className="movies-card__img"
-          // src={
-          //   pathname === "/movies"
-          //     ? `${MOVIES_API_URL}${movie.image.url}`
-          //     : `${movie.image}`
-          // }
           src={
-            `${MOVIES_API_URL}${movie.image.url}`
+            pathname === "/movies"
+              ? `${MOVIES_API_URL}${movie.image.url}`
+              : `${movie.image}`
           }
           alt={`Заставка для фильма "${movie.nameRU}"`}
         />
