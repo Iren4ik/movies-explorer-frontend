@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 // import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-function SearchForm({ onSearch, inputValue }) {
-  const [isFilter, setFilter] = useState(false);
+function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange }) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
@@ -22,10 +21,6 @@ function SearchForm({ onSearch, inputValue }) {
       setSearchError("Нужно ввести ключевое слово");
     }
   }
-
-  const handleFilterChange = () => {
-    setFilter(!isFilter);
-  };
 
   return (
     <section className="search">
@@ -50,7 +45,7 @@ function SearchForm({ onSearch, inputValue }) {
           </button>
         </div>
         <div className="search__filter-container">
-          <FilterCheckbox isFilter={isFilter} onChange={handleFilterChange} />
+          <FilterCheckbox isFilterOn={isFilterOn} onFilterChange={onFilterChange} />
           <p className="search__filter-title">Короткометражки</p>
         </div>
       </form>

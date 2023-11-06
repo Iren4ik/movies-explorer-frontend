@@ -1,13 +1,13 @@
 import "./FilterCheckbox.css";
 
-function FilterCheckbox({ isFilter, onChange }) {
+function FilterCheckbox({ isFilterOn, onFilterChange }) {
   return (
     <label className="checkbox">
       <input
         type="checkbox"
         className="checkbox__input"
-        cheked={isFilter.toString()}
-        onChange={onChange}
+        checked={isFilterOn}
+        onChange={(evt) => onFilterChange(evt.target.checked)}
         name="checkbox"
       />
       <span className="checkbox__div"></span>
