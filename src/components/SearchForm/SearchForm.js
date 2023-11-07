@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 // import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 
-function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoading }) {
+function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoading, serverError }) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
@@ -53,7 +53,16 @@ function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoadin
           <p className="search__filter-title">Короткометражки</p>
         </div>
       </form>
-      <span className="search__error search__error_active">{searchError}</span>
+      {serverError 
+        ? 
+        <span className="search__error search__error_active">
+          Во время запроса произошла ошибка. Возможно, 
+          проблема с соединением или сервер недоступен. Подождите 
+          немного и попробуйте ещё раз
+        </span> 
+        :
+        <span className="search__error search__error_active">{searchError}</span>
+      }
     </section>
   );
 }

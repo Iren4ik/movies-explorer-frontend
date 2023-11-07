@@ -3,16 +3,22 @@ import { useCallback, useEffect, useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import * as moviesApi from "../../utils/MoviesApi";
-import { search, filter } from "../../utils/utils";
+import { search, filter, renderMoreMovies } from "../../utils/utils";
+import {
+  L_SIZE_SCREEN,
+  M_SIZE_SCREEN,
+  S_SIZE_SCREEN,
+} from "../../utils/constants";
 
 
 function Movies() {
-  const [allMovies, setAllMovies] = useState([]);
+  // const [allMovies, setAllMovies] = useState([]);
   const [foundCards, setFoundCards] = useState([]);
   const [moviesForRender, setMoviesForRender] = useState([])
   const [inputSearchValue, setInputSearchValue] = useState([])
   const [isFilterOn, setFilter] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState(false)
   const [count, setCount] = useState(renderMoreMovies().initial);
 
   const visibleMovies = moviesForRender.slice(0, count);
@@ -32,22 +38,21 @@ function Movies() {
   const handleSubmitSearchRequest = useCallback((searchQuery) => {
   const storedAllMovies = localStorage.getItem("allMovies");
     if (!storedAllMovies) {
-      setLoading(true)
+      setLoading(true);
       moviesApi.getMovies()
         .then((dataMovies) => {
           localStorage.setItem("allMovies", JSON.stringify(dataMovies));
-          setAllMovies(dataMovies);
+          // setAllMovies(dataMovies);
           searchAndFilterMovies(dataMovies, searchQuery, isFilterOn);
         })
       .catch((err) => {
-        console.error(`Во время запроса произошла ошибка. Возможно, 
-        проблема с соединением или сервер недоступен. Подождите 
-        немного и попробуйте ещё раз`)
+        setServerError(true);
+        console.error(`Произошла ошибка: ${err}`);
       })
       .finally(() => setLoading(false))
     } 
     else { 
-      setAllMovies(JSON.parse(storedAllMovies));
+      // setAllMovies(JSON.parse(storedAllMovies));
       searchAndFilterMovies(JSON.parse(storedAllMovies), searchQuery, isFilterOn);
     }
   }, [searchAndFilterMovies, isFilterOn])
@@ -70,17 +75,6 @@ function Movies() {
   }
   }, [foundCards])
 
-  function renderMoreMovies() {
-    let counter = { initial: 12, increase: 3 };
-    if (window.innerWidth <= 768) {
-      counter = { initial: 8, increase: 2 };
-    }
-    if (window.innerWidth <= 450) {
-      counter = { initial: 5, increase: 2 };
-    }
-    return counter;
-  }
-
   function openMoreMovies() {
     setCount(count + renderMoreMovies().increase);
   }
@@ -88,23 +82,22 @@ function Movies() {
   useEffect(() => {
     setCount(renderMoreMovies().initial);
     function reRenderMovies() {
-      if (window.innerWidth > 1280) {
+      if (window.innerWidth > L_SIZE_SCREEN) {
         setCount(renderMoreMovies().initial);
       }
-      if (window.innerWidth <= 1280) {
+      if (window.innerWidth <= L_SIZE_SCREEN) {
         setCount(renderMoreMovies().initial);
       }
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= M_SIZE_SCREEN) {
         setCount(renderMoreMovies().initial);
       }
-      if (window.innerWidth <= 450) {
+      if (window.innerWidth <= S_SIZE_SCREEN) {
         setCount(renderMoreMovies().initial);
       }
     }
     window.addEventListener("resize", reRenderMovies);
     return () => window.removeEventListener("resize", reRenderMovies);
   }, [moviesForRender]);
-
 
   useEffect(() => {
     if (
@@ -129,6 +122,7 @@ function Movies() {
         isFilterOn={isFilterOn}
         onFilterChange={handleOnFilterClick}
         isLoading={isLoading}
+        serverError={serverError}
       />
       <MoviesCardList movies={visibleMovies} isLoading={isLoading}/>
       <div className="movies__btn-more-container">
