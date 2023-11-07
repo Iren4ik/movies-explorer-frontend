@@ -8,6 +8,7 @@ import { search, filter } from "../../utils/utils";
 
 function Movies() {
   const [allMovies, setAllMovies] = useState([]);
+  const [foundCards, setFoundCards] = useState([]);
   const [moviesForRender, setMoviesForRender] = useState([])
   const [inputSearchValue, setInputSearchValue] = useState([])
   const [isFilterOn, setFilter] = useState(false);
@@ -18,15 +19,11 @@ function Movies() {
 
   // поиск и фильтрация фильмов
   const searchAndFilterMovies = useCallback((dataMovies, keyWord, isFilterOn) => {
-    // ищем фильмы по ключевым словам
-    const foundMovies = search(dataMovies, keyWord);
-    // и фильтруем их, если нажат фильтр
-    // если фильм не нажат, вернется foundMovies
-    const filteredMovies = filter(foundMovies, isFilterOn);
-    // рендерим полученные фильмы
+    const found = search(dataMovies, keyWord);
+    setFoundCards(found);
+    const filteredMovies = filter(found, isFilterOn);
     setMoviesForRender(filteredMovies);
-    // запишем запрос в localStorage
-    localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
+    localStorage.setItem("foundMovies", JSON.stringify(filteredMovies));
     localStorage.setItem("moviesSearchQuery", JSON.stringify(keyWord));
     localStorage.setItem("filterState", JSON.stringify(isFilterOn));
   }, [])
@@ -34,16 +31,12 @@ function Movies() {
   // запрос на получение фильмов
   const handleSubmitSearchRequest = useCallback((searchQuery) => {
   const storedAllMovies = localStorage.getItem("allMovies");
-  //проверяю, загружены ли уже фильмы в localStorage
-  // если нетБ то делаю запрос на сервер
     if (!storedAllMovies) {
       setLoading(true)
       moviesApi.getMovies()
         .then((dataMovies) => {
-          // полученные фильмы сохраняю в localStorage
           localStorage.setItem("allMovies", JSON.stringify(dataMovies));
           setAllMovies(dataMovies);
-          // ищу фильмы по ключеым словам и с учетом фильтра
           searchAndFilterMovies(dataMovies, searchQuery, isFilterOn);
         })
       .catch((err) => {
@@ -53,10 +46,8 @@ function Movies() {
       })
       .finally(() => setLoading(false))
     } 
-    // если фильмы есть в localStorage
     else { 
       setAllMovies(JSON.parse(storedAllMovies));
-      // ищу среди них
       searchAndFilterMovies(JSON.parse(storedAllMovies), searchQuery, isFilterOn);
     }
   }, [searchAndFilterMovies, isFilterOn])
@@ -64,22 +55,20 @@ function Movies() {
   // включение фильтрации
   const handleOnFilterClick = useCallback((isFilterOn) => {
     setFilter(isFilterOn);
-    // если фильтр нажат, происходит фильтрация
     if (isFilterOn) {
-      const filteredMovies = filter(moviesForRender, isFilterOn);
-      // рендерим отфильтрованные фильмы
-      setMoviesForRender(filteredMovies);
-      //сохраняем запрос с учетом фильтра в localStorage
-      localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies));
+      const filtered = filter(foundCards, isFilterOn);
+      setMoviesForRender(filtered);
+      localStorage.setItem("foundMovies", JSON.stringify(filtered));
       localStorage.setItem("filterState", JSON.stringify(isFilterOn));
-    // если отключаем фильтр
-    } else {
-      // выводим карточки из запроса до включения фильтра
-      const moviesFromLStorage = JSON.parse(localStorage.getItem("foundMovies"));
-      setMoviesForRender(moviesFromLStorage);
-      localStorage.setItem("filterState", JSON.stringify(isFilterOn));  
-    }
-  }, [moviesForRender])
+  } else {
+    const allMovies = JSON.parse(localStorage.getItem("allMovies"));
+    const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));;
+    const found = search(allMovies, searchQuery);
+    setMoviesForRender(found);
+    localStorage.setItem("foundMovies", JSON.stringify(found));
+    localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+  }
+  }, [foundCards])
 
   function renderMoreMovies() {
     let counter = { initial: 12, increase: 3 };
@@ -116,55 +105,21 @@ function Movies() {
     return () => window.removeEventListener("resize", reRenderMovies);
   }, [moviesForRender]);
 
+
   useEffect(() => {
     if (
-      localStorage.getItem("moviesSearchQuery") && 
-      localStorage.getItem("filterState") 
-      // &&
-      // (localStorage.getItem("foundMovies") || 
-      // localStorage.getItem("filteredMovies"))
+      localStorage.getItem("foundMovies") && 
+      localStorage.getItem("moviesSearchQuery") &&
+      localStorage.getItem("filterState")
       ) {
-      // const moviesFromLStorage = JSON.parse(localStorage.getItem("foundMovies"));
+      const moviesFromLStorage = JSON.parse(localStorage.getItem("foundMovies"));
       const queryFromLStorage = JSON.parse(localStorage.getItem("moviesSearchQuery"));
       const filterStateFromLStorage = JSON.parse(localStorage.getItem("filterState"));
-      // const filteredMoviesFromLStorage = JSON.parse(localStorage.getItem("filteredMovies"));
       setInputSearchValue(queryFromLStorage);
+      setMoviesForRender(moviesFromLStorage);
       setFilter(filterStateFromLStorage);
-      
-      if (localStorage.getItem("foundMovies")) {
-        const moviesFromLStorage = JSON.parse(localStorage.getItem("foundMovies"));
-        setMoviesForRender(moviesFromLStorage);
-      } else if (localStorage.getItem("filteredMovies")) {
-        const filteredMoviesFromLStorage = JSON.parse(localStorage.getItem("filteredMovies"));
-        setMoviesForRender(filteredMoviesFromLStorage);
-      }
-
-      // searchAndFilterMovies()
-      // if (filterStateFromLStorage === true) {
-      //   setMoviesForRender(filteredMoviesFromLStorage);
-      // }
-      // setInputSearchValue(queryFromLStorage);
-      // searchAndFilterMovies(queryFromLStorage);
-      // setMoviesForRender(moviesFromLStorage);
-      // if (filterStateFromLStorage === true) {
-        // setMoviesForRender(filteredMoviesFromLStorage);
-      // } else {
-      //   setMoviesForRender(moviesFromLStorage);
-      // }
     }
   }, [])
-
-  // useEffect(() => {
-  //   if (
-  //     localStorage.getItem("foundMovies") && 
-  //     localStorage.getItem("moviesSearchQuery")
-  //     ) {
-  //     const moviesFromLStorage = JSON.parse(localStorage.getItem("foundMovies"));
-  //     const queryFromLStorage = JSON.parse(localStorage.getItem("moviesSearchQuery"));
-  //     setInputSearchValue(queryFromLStorage);
-  //     setMoviesForRender(moviesFromLStorage);
-  //   }
-  // }, [])
 
   return (
     <main className="movies">
