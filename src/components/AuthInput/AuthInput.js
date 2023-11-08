@@ -7,10 +7,12 @@ function AuthInput({
   minLength,
   maxLength,
   placeholder,
+  autoComplete,
   pattern,
   value,
   onChange,
   error,
+  isLoading,
 }) {
   return (
     <label className="auth-input">
@@ -24,10 +26,12 @@ function AuthInput({
         minLength={minLength}
         maxLength={maxLength}
         placeholder={placeholder}
+        autoComplete={autoComplete}
         required
         pattern={pattern}
         value={value || ''}
         onChange={onChange}
+        disabled={isLoading ? true : false}
       />
       <span className="auth-input__error">{error}</span>
     </label>

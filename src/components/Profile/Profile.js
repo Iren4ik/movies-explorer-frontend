@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+
 import { useState } from "react";
 import "./Profile.css";
 
-function Profile({ user }) {
+function Profile({ user, onLogout }) {
   const [isEditProfile, setEditProfile] = useState(false);
 
   const handleClickEditProfile = () => {
@@ -46,10 +46,8 @@ function Profile({ user }) {
               />
             </label>
           </div>
-
           <div className="profile__btns">
             {!isEditProfile && (
-              <>
                 <button
                   className="profile__btn profile__btn_type_edit"
                   type="button"
@@ -57,18 +55,9 @@ function Profile({ user }) {
                 >
                   Редактировать
                 </button>
-                <Link
-                  to="/signin"
-                  className="profile__btn profile__btn_type_logout"
-                >
-                  Выйти из аккаунта
-                </Link>
-              </>
-            )}
-            {/* Вывод ошибки при редактировании профиля */}
-            {/* <span className="profile__error">
-            При обновлении профиля произошла ошибка.
-          </span> */}
+              )}
+
+            <span className="profile__error"></span>
             {isEditProfile && (
               <button
                 className="profile__btn profile__btn_type_save"
@@ -78,16 +67,19 @@ function Profile({ user }) {
                 Сохранить
               </button>
             )}
-
-            {/* Неактивная кнопка сохранения */}
-            {/* <button
-            className="profile__btn profile__btn_type_save profile__btn_disable"
-            type="button"
-          >
-            Сохранить
-          </button> */}
           </div>
         </form>
+
+        <div className="profile__btns">
+          {!isEditProfile && (
+            <button
+              onClick={onLogout}
+              className="profile__btn profile__btn_type_logout"
+            >
+              Выйти из аккаунта
+            </button>
+          )}
+        </div>
       </section>
     </main>
   );

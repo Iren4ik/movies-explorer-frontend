@@ -12,7 +12,10 @@ function AuthSection({
   pathname,
   link,
   onSubmit,
-  isValid
+  autoComplete,
+  isValid,
+  isLoading,
+  loadingButtonText
 }) {
   const location = useLocation();
   return (
@@ -26,6 +29,7 @@ function AuthSection({
         noValidate
         isValid={isValid}
         onSubmit={onSubmit}
+        autoComplete={autoComplete}
       >
         <div className="auth-section__input-container">{children}</div>
         <div
@@ -40,10 +44,10 @@ function AuthSection({
           </span>
           <button 
             type="submit" 
-            className={`auth-section__btn ${!isValid ? 'auth-section__btn_disabled' : ''}`}
-            disabled={!isValid}
+            className={`auth-section__btn ${!isValid || isLoading ? 'auth-section__btn_disabled' : ''}`}
+            disabled={!isValid || isLoading}
           >
-            {buttonText}
+            {!isLoading ? `${buttonText}` : `${loadingButtonText}`}
           </button>
           <p className="auth-section__text">
             {`${text} `}

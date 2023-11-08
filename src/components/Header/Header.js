@@ -15,7 +15,7 @@ function Header({ isLoggedIn }) {
   }
 
   const headerMenu =
-    // pathname === "/" ||
+    pathname === "/" ||
     pathname === "/movies" ||
     pathname === "/saved-movies" ||
     pathname === "/profile";
@@ -63,7 +63,7 @@ function Header({ isLoggedIn }) {
             ></button>
           </>
         )}
-        {isLoggedIn && pathname === "/" && <AuthLinks />}
+        {!isLoggedIn && pathname === "/" && <AuthLinks />}
       </div>
     </header>
   );

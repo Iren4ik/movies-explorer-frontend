@@ -4,13 +4,13 @@ import AuthInput from "../AuthInput/AuthInput";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 import { EMAIL_REG } from "../../utils/constants";
 
-function Login({ user, onLogin }) {
+function Login({ onLogin,isLoading }) {
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin(values.name, values.email, values.password);
+    onLogin(values.email, values.password);
   }
 
   return (
@@ -26,17 +26,21 @@ function Login({ user, onLogin }) {
         link="Регистрация"
         onSubmit={handleSubmit}
         isValid={isValid}
-        novalidate
+        isLoading={isLoading}
+        loadingButtonText="Проверяю..."
+        autoComplete="off"
       >
         <AuthInput
           title="E-mail"
           type="email"
           name="email"
           placeholder="Введите e-mail"
+          autoComplete="off"
           pattern={EMAIL_REG}
           value={values.email || ""}
           onChange={handleChange}
           error={errors.email}
+          isLoading={isLoading}
         />
         <AuthInput
           title="Пароль"
@@ -45,9 +49,11 @@ function Login({ user, onLogin }) {
           minLength="8"
           maxLength="20"
           placeholder="Введите пароль"
+          autoComplete="off"
           value={values.password || ""}
           onChange={handleChange}
           error={errors.password}
+          isLoading={isLoading}
         />
       </AuthSection>
     </main>

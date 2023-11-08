@@ -2,9 +2,9 @@ import "./Register.css";
 import AuthSection from "../AuthSection/AuthSection";
 import AuthInput from "../AuthInput/AuthInput";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
-import { EMAIL_REG } from "../../utils/constants";
+import { EMAIL_REG, NAME_REG } from "../../utils/constants";
 
-function Register({ onRegister }) {
+function Register({ onRegister, isLoading }) {
   // const [isError, setError] = useState(true);
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
@@ -26,6 +26,9 @@ function Register({ onRegister }) {
         link="Войти"
         onSubmit={handleSubmit}
         isValid={isValid}
+        isLoading={isLoading}
+        loadingButtonText="Регистрирую..."
+        autoComplete="off"
       >
         <AuthInput
           title="Имя"
@@ -34,19 +37,24 @@ function Register({ onRegister }) {
           minLength="2"
           maxLength="30"
           placeholder="Введите имя"
+          autoComplete="off"
+          pattern={NAME_REG}
           value={values.name || ""}
           onChange={handleChange}
           error={errors.name}
+          isLoading={isLoading}
         />
         <AuthInput
           title="E-mail"
           type="email"
           name="email"
           placeholder="Введите e-mail"
+          autoComplete="off"
           pattern={EMAIL_REG}
           value={values.email || ""}
           onChange={handleChange}
           error={errors.email}
+          isLoading={isLoading}
         />
         <AuthInput
           title="Пароль"
@@ -55,9 +63,11 @@ function Register({ onRegister }) {
           minLength="8"
           maxLength="20"
           placeholder="Введите пароль"
+          autoComplete="off"
           value={values.password || ""}
           onChange={handleChange}
           error={errors.password}
+          isLoading={isLoading}
         />
       </AuthSection>
     </main>
