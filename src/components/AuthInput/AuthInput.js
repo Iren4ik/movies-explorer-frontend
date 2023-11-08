@@ -1,14 +1,15 @@
 import "./AuthInput.css";
 
 function AuthInput({
-  isError,
   title,
   type,
   name,
   minLength,
   maxLength,
-  value,
   placeholder,
+  pattern,
+  value,
+  onChange,
   error,
 }) {
   return (
@@ -16,18 +17,19 @@ function AuthInput({
       {title}
       <input
         className={`auth-input__input ${
-          isError ? "auth-input__input_valid_error" : ""
+          error ? "auth-input__input_valid_error" : ""
         }`}
         type={type}
         name={name}
         minLength={minLength}
         maxLength={maxLength}
-        value={value}
         placeholder={placeholder}
         required
+        pattern={pattern}
+        value={value || ''}
+        onChange={onChange}
       />
       <span className="auth-input__error">{error}</span>
-      {/* <span className="auth-input__error auth-input__error_hidden">{error}</span> */}
     </label>
   );
 }

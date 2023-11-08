@@ -11,13 +11,22 @@ function AuthSection({
   text,
   pathname,
   link,
+  onSubmit,
+  isValid
 }) {
   const location = useLocation();
   return (
     <section className="auth-section">
       <Logo />
       <h1 className="auth-section__title">{title}</h1>
-      <form className="auth-section__form" action="#" name={name}>
+      <form 
+        className="auth-section__form" 
+        action="#" 
+        name={name} 
+        noValidate
+        isValid={isValid}
+        onSubmit={onSubmit}
+      >
         <div className="auth-section__input-container">{children}</div>
         <div
           className={
@@ -26,18 +35,16 @@ function AuthSection({
               : "auth-section__space auth-section__space_two-input"
           }
         >
-          {/* <span className="auth-section__error">{error}</span> */}
-          <span className="auth-section__error"></span>
-          <button type="submit" className="auth-section__btn">
-            {buttonText}
-          </button>
-          {/* Неактивная кнопка */}
-          {/* <button
-            type="submit"
-            className="auth-section__btn auth-section__btn_disabled"
+          <span className="auth-section__error">
+            
+          </span>
+          <button 
+            type="submit" 
+            className={`auth-section__btn ${!isValid ? 'auth-section__btn_disabled' : ''}`}
+            disabled={!isValid}
           >
             {buttonText}
-          </button> */}
+          </button>
           <p className="auth-section__text">
             {`${text} `}
             <Link to={pathname} className="auth-section__link">

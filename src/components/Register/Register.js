@@ -1,10 +1,18 @@
 import "./Register.css";
 import AuthSection from "../AuthSection/AuthSection";
 import AuthInput from "../AuthInput/AuthInput";
-import { useState } from "react";
+import useFormWithValidation from "../../hooks/useFormWithValidation";
+import { EMAIL_REG } from "../../utils/constants";
 
-function Register({ user }) {
-  const [isError, setError] = useState(true);
+function Register({ onRegister }) {
+  // const [isError, setError] = useState(true);
+
+  const { values, errors, isValid, handleChange } = useFormWithValidation();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onRegister(values.name, values.email, values.password);
+  }
 
   return (
     <main className="register">
@@ -16,6 +24,8 @@ function Register({ user }) {
         text="Уже зарегистрированы?"
         pathname="/signin"
         link="Войти"
+        onSubmit={handleSubmit}
+        isValid={isValid}
       >
         <AuthInput
           title="Имя"
@@ -23,28 +33,31 @@ function Register({ user }) {
           name="name"
           minLength="2"
           maxLength="30"
-          value={user.name}
           placeholder="Введите имя"
-          error=""
+          value={values.name || ""}
+          onChange={handleChange}
+          error={errors.name}
         />
         <AuthInput
           title="E-mail"
           type="email"
           name="email"
-          value={user.email}
           placeholder="Введите e-mail"
-          error=""
+          pattern={EMAIL_REG}
+          value={values.email || ""}
+          onChange={handleChange}
+          error={errors.email}
         />
         <AuthInput
-          isError={isError}
           title="Пароль"
           type="password"
           name="password"
           minLength="8"
           maxLength="20"
-          value={user.password}
           placeholder="Введите пароль"
-          error="Что-то пошло не так..."
+          value={values.password || ""}
+          onChange={handleChange}
+          error={errors.password}
         />
       </AuthSection>
     </main>
