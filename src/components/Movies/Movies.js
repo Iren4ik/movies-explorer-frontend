@@ -12,13 +12,12 @@ import {
 
 
 function Movies() {
-  // const [allMovies, setAllMovies] = useState([]);
   const [foundCards, setFoundCards] = useState([]);
   const [moviesForRender, setMoviesForRender] = useState([])
   const [inputSearchValue, setInputSearchValue] = useState([])
   const [isFilterOn, setFilter] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState(false)
+  const [serverError, setServerError] = useState(false);
   const [count, setCount] = useState(renderMoreMovies().initial);
 
   const visibleMovies = moviesForRender.slice(0, count);
@@ -42,7 +41,6 @@ function Movies() {
       moviesApi.getMovies()
         .then((dataMovies) => {
           localStorage.setItem("allMovies", JSON.stringify(dataMovies));
-          // setAllMovies(dataMovies);
           searchAndFilterMovies(dataMovies, searchQuery, isFilterOn);
         })
       .catch((err) => {
@@ -51,8 +49,7 @@ function Movies() {
       })
       .finally(() => setLoading(false))
     } 
-    else { 
-      // setAllMovies(JSON.parse(storedAllMovies));
+    else {
       searchAndFilterMovies(JSON.parse(storedAllMovies), searchQuery, isFilterOn);
     }
   }, [searchAndFilterMovies, isFilterOn])
@@ -124,7 +121,10 @@ function Movies() {
         isLoading={isLoading}
         serverError={serverError}
       />
-      <MoviesCardList movies={visibleMovies} isLoading={isLoading}/>
+      <MoviesCardList 
+        movies={visibleMovies} 
+        isLoading={isLoading}
+      />
       <div className="movies__btn-more-container">
         <button
           type="button"

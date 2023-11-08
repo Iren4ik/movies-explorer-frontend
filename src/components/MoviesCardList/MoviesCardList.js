@@ -5,9 +5,11 @@ import Preloader from "../Preloader/Preloader";
 function MoviesCardList({ movies, isLoading }) {
   return (
     <section className="movies-card-list">
+      {!localStorage.getItem("moviesSearchQuery") && movies.length === 0 && null}
+
       {isLoading && movies.length === 0 && <Preloader />}
 
-      {movies.length === 0 && !isLoading && (
+      {movies.length === 0 && !isLoading && localStorage.getItem("moviesSearchQuery") && (
         <p className="movies-card-list__not-found">Ничего не найдено</p>
       )}
       
