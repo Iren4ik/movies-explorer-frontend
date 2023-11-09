@@ -17,3 +17,22 @@ export const INC_FOR_S_SCREEN = 1;
 
 export const EMAIL_REG = "^\\S+@\\S+\\.\\S+$";
 export const NAME_REG = "^[A-Za-zА-Яа-яЁё\\-\\s]+$";
+
+// Ошибки страницы с фильмами
+export const SEARCH_SERVER_ERROR = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
+export const SEARCH_QUERY_ERROR = 'Нужно ввести ключевое слово';
+export const NOT_FOUND_MOVIES_ERROR = 'Ничего не найдено';
+
+//Ошибки страницы логина пользователя
+// export const UNAUTHORIZED_ERROR = 'Вы ввели неправильный логин или пароль';
+export const LOGIN_ERROR = 'При авторизации произошла ошибка';
+
+//Ошибки страницы регистрации пользователя
+// export const CONFLICT_ERROR = 'Пользователь с таким email уже существует';
+export const REGISTER_ERROR = 'При регистрации пользователя произошла ошибка';
+
+//Ошибки страницы обновления профиля
+// export const UPDATE_PROFILE_BAD_REQUEST_ERROR = 'Пользователь с таким email уже существует';
+export const UPDATE_PROFILE_ERROR = 'При обновлении профиля произошла ошибка';
+
+//Другие ошибки

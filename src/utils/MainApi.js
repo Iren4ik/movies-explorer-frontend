@@ -28,3 +28,18 @@ export const login  = (email, password) => {
   })
   .then(res => checkResponse(res))
 }; 
+
+export const updateUserInfo = (dataUser) => {
+  return fetch(`${MAIN_API_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({
+      name: dataUser.name,
+      email: dataUser.email,
+    }),
+  })
+  .then(res => checkResponse(res));
+};

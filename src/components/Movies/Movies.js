@@ -57,19 +57,21 @@ function Movies() {
   // включение фильтрации
   const handleOnFilterClick = useCallback((isFilterOn) => {
     setFilter(isFilterOn);
-    if (isFilterOn) {
-      const filtered = filter(foundCards, isFilterOn);
-      setMoviesForRender(filtered);
-      localStorage.setItem("foundMovies", JSON.stringify(filtered));
-      localStorage.setItem("filterState", JSON.stringify(isFilterOn));
-  } else {
-    const allMovies = JSON.parse(localStorage.getItem("allMovies"));
-    const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));;
-    const found = search(allMovies, searchQuery);
-    setMoviesForRender(found);
-    localStorage.setItem("foundMovies", JSON.stringify(found));
-    localStorage.setItem("filterState", JSON.stringify(isFilterOn));
-  }
+    if (localStorage.getItem("moviesSearchQuery")) {
+      if (isFilterOn) {
+        const filtered = filter(foundCards, isFilterOn);
+        setMoviesForRender(filtered);
+        localStorage.setItem("foundMovies", JSON.stringify(filtered));
+        localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+      } else {
+        const allMovies = JSON.parse(localStorage.getItem("allMovies"));
+        const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));;
+        const found = search(allMovies, searchQuery);
+        setMoviesForRender(found);
+        localStorage.setItem("foundMovies", JSON.stringify(found));
+        localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+      }
+    }
   }, [foundCards])
 
   function openMoreMovies() {

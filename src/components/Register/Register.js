@@ -4,8 +4,7 @@ import AuthInput from "../AuthInput/AuthInput";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 import { EMAIL_REG, NAME_REG } from "../../utils/constants";
 
-function Register({ onRegister, isLoading }) {
-  // const [isError, setError] = useState(true);
+function Register({ onRegister, isLoading, registerError }) {
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
 
@@ -19,7 +18,6 @@ function Register({ onRegister, isLoading }) {
       <AuthSection
         title="Добро пожаловать!"
         name="register-form"
-        error=""
         buttonText="Зарегистрироваться"
         text="Уже зарегистрированы?"
         pathname="/signin"
@@ -29,6 +27,7 @@ function Register({ onRegister, isLoading }) {
         isLoading={isLoading}
         loadingButtonText="Регистрирую..."
         autoComplete="off"
+        registerError={registerError}
       >
         <AuthInput
           title="Имя"

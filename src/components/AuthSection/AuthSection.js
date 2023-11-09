@@ -1,12 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import "./AuthSection.css";
 import Logo from "../Logo/Logo";
+import { REGISTER_ERROR, LOGIN_ERROR } from "../../utils/constants";
 
 function AuthSection({
   title,
   name,
   children,
-  error,
   buttonText,
   text,
   pathname,
@@ -15,7 +15,9 @@ function AuthSection({
   autoComplete,
   isValid,
   isLoading,
-  loadingButtonText
+  loadingButtonText,
+  registerError,
+  loginError,
 }) {
   const location = useLocation();
   return (
@@ -27,7 +29,7 @@ function AuthSection({
         action="#" 
         name={name} 
         noValidate
-        isValid={isValid}
+        disabled={!isValid}
         onSubmit={onSubmit}
         autoComplete={autoComplete}
       >
@@ -40,7 +42,8 @@ function AuthSection({
           }
         >
           <span className="auth-section__error">
-            
+            {registerError ? `${REGISTER_ERROR}` : ''}
+            {loginError ? `${LOGIN_ERROR}` : ''}
           </span>
           <button 
             type="submit" 

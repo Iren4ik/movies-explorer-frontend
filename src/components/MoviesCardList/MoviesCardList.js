@@ -1,6 +1,7 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
+import { NOT_FOUND_MOVIES_ERROR } from "../../utils/constants";
 
 function MoviesCardList({ movies, isLoading }) {
   return (
@@ -10,7 +11,7 @@ function MoviesCardList({ movies, isLoading }) {
       {isLoading && movies.length === 0 && <Preloader />}
 
       {movies.length === 0 && !isLoading && localStorage.getItem("moviesSearchQuery") && (
-        <p className="movies-card-list__not-found">Ничего не найдено</p>
+        <p className="movies-card-list__not-found">{NOT_FOUND_MOVIES_ERROR}</p>
       )}
       
       {movies.length !== 0 && (

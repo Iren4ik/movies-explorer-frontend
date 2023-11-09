@@ -1,7 +1,7 @@
 import "./SearchForm.css";
 import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-// import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import { SEARCH_SERVER_ERROR, SEARCH_QUERY_ERROR } from "../../utils/constants";
 
 function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoading, serverError }) {
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -18,7 +18,7 @@ function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoadin
       onSearch(searchInputValue);
       setSearchError("");
     } else {
-      setSearchError("Нужно ввести ключевое слово");
+      setSearchError(SEARCH_QUERY_ERROR);
     }
   }
 
@@ -55,11 +55,7 @@ function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoadin
       </form>
       {serverError 
         ? 
-        <span className="search__error search__error_active">
-          Во время запроса произошла ошибка. Возможно, 
-          проблема с соединением или сервер недоступен. Подождите 
-          немного и попробуйте ещё раз
-        </span> 
+        <span className="search__error search__error_active"> {SEARCH_SERVER_ERROR} </span> 
         :
         <span className="search__error search__error_active">{searchError}</span>
       }

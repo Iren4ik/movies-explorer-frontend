@@ -4,7 +4,7 @@ import AuthInput from "../AuthInput/AuthInput";
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 import { EMAIL_REG } from "../../utils/constants";
 
-function Login({ onLogin,isLoading }) {
+function Login({ onLogin, isLoading, loginError }) {
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
 
@@ -18,8 +18,6 @@ function Login({ onLogin,isLoading }) {
       <AuthSection
         title="Рады видеть!"
         name="login-form"
-        error="При авторизации произошла ошибка. Токен не передан 
-        или передан не в том формате."
         buttonText="Войти"
         text="Ещё не зарегистрированы?"
         pathname="/signup"
@@ -29,6 +27,7 @@ function Login({ onLogin,isLoading }) {
         isLoading={isLoading}
         loadingButtonText="Проверяю..."
         autoComplete="off"
+        loginError={loginError}
       >
         <AuthInput
           title="E-mail"
