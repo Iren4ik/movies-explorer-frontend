@@ -6,12 +6,17 @@ import ProfileLink from "../ProfileLink/ProfileLink";
 import AuthLinks from "../AuthLinks/AuthLinks";
 import Logo from "../Logo/Logo";
 
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, newEntrance }) {
   const { pathname } = useLocation();
   const [menu, setMenu] = useState(false);
 
   function handleOpenMenu() {
     setMenu(!menu);
+  }
+
+  function handleOpenProfile() {
+    setMenu(!menu);
+    newEntrance();
   }
 
   const headerMenu =
@@ -42,7 +47,7 @@ function Header({ isLoggedIn }) {
               >
                 <div className="header__menu">
                   <Navigation onClick={handleOpenMenu} />
-                  <ProfileLink onClick={handleOpenMenu}/>
+                  <ProfileLink onClick={handleOpenProfile}/>
                 </div>
               </div>
             </div>

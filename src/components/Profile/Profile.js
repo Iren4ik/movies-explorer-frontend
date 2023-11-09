@@ -1,27 +1,31 @@
-
-// import { useState } from "react";
 import "./Profile.css";
+import { useContext, useEffect, useState } from 'react';
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 import { EMAIL_REG, NAME_REG, UPDATE_PROFILE_ERROR } from "../../utils/constants";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ user, onEditProfile, onLogout, onUpdate, isLoading, updateError, isEditingProfile }) {
-  // const [isEditingProfile, setEditingProfile] = useState(false);
+function Profile({ onEditProfile, onLogout, onUpdate, isLoading, updateError, isEditingProfile, isNewEntranceOnPage }) {
 
-  const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
+  const { values, errors, isValid, handleChange } = useFormWithValidation();
+  const currentUser = useContext(CurrentUserContext);
+  const [btnDisabled, setBtnDisabled] = useState(false);
+
+  //Если новые данные не измненились, кнопка не активна
+  useEffect(() => {
+    currentUser.name !== values.name || currentUser.email !== values.email
+      ? setBtnDisabled(false)
+      : setBtnDisabled(true);
+  }, [currentUser, values]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onUpdate(values);
   }
 
-  // function handleClickEditProfile() {
-  //   setEditingProfile(true);
-  // };
-
   return (
     <main className="profile">
       <section className="profile__section">
-        <h1 className="profile__title">Привет, {user.name}!</h1>
+        <h1 className="profile__title">Привет, {currentUser.name}!</h1>
         <form 
           className="profile__form" 
           name="edit-profile" 
@@ -42,9 +46,9 @@ function Profile({ user, onEditProfile, onLogout, onUpdate, isLoading, updateErr
                   placeholder="Введите имя"
                   minLength="2"
                   maxLength="30"
-                  disabled={!isEditingProfile}
+                  disabled={!isEditingProfile || isNewEntranceOnPage}
                   pattern={NAME_REG}
-                  value={values.name || ""}
+                  value={!isEditingProfile ? currentUser.name : (values.name || "")}
                   onChange={handleChange}
                   required
                 />
@@ -62,9 +66,9 @@ function Profile({ user, onEditProfile, onLogout, onUpdate, isLoading, updateErr
                   type="email"
                   name="email"
                   placeholder="Укажите e-mail"
-                  disabled={!isEditingProfile}
+                  disabled={!isEditingProfile || isNewEntranceOnPage}
                   pattern={EMAIL_REG}
-                  value={values.email || ""}
+                  value={!isEditingProfile ? currentUser.email : (values.email || "")}
                   onChange={handleChange}
                   required
                 />
@@ -75,11 +79,11 @@ function Profile({ user, onEditProfile, onLogout, onUpdate, isLoading, updateErr
 
           <div className="profile__btns">
             <span className="profile__error">{updateError ? `${UPDATE_PROFILE_ERROR}` : ''}</span>
-            {isEditingProfile && (
+            {isEditingProfile && !isNewEntranceOnPage && (
               <button
-                className={`profile__btn profile__btn_type_save ${!isValid || isLoading ? 'profile__btn_disabled' : ''}`}
+                className={`profile__btn profile__btn_type_save ${!isValid || isLoading || btnDisabled ? 'profile__btn_disabled' : ''}`}
                 type="submit"
-                disabled={!isValid || isLoading}
+                disabled={!isValid || isLoading || btnDisabled}
               >
                 {!isLoading ? "Сохранить" : "Сохраняю..."}
               </button>
@@ -88,7 +92,7 @@ function Profile({ user, onEditProfile, onLogout, onUpdate, isLoading, updateErr
         </form>
 
         <div className="profile__btns">
-          {!isEditingProfile && (
+          {(isNewEntranceOnPage || !isEditingProfile) &&   (
             <button
               className="profile__btn profile__btn_type_edit"
               type="button"
@@ -97,7 +101,7 @@ function Profile({ user, onEditProfile, onLogout, onUpdate, isLoading, updateErr
               Редактировать
             </button>
           )}
-          {!isEditingProfile && (
+          {(isNewEntranceOnPage || !isEditingProfile) &&  (
             <button
               onClick={onLogout}
               className="profile__btn profile__btn_type_logout"

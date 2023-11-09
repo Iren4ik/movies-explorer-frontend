@@ -128,7 +128,8 @@
 }
 
 .profile__error {
-  margin-bottom: 4px;
+  margin-top: -20px;
+  margin-bottom: 20px;
   color: #ff004c;
   text-align: center;
   font-size: 11px;
