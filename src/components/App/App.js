@@ -11,8 +11,16 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
-import { register, login, updateUserInfo, getProfileInfo, getContent } from "../../utils/MainApi.js"
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { 
+  register, 
+  login, 
+  updateUserInfo, 
+  getProfileInfo, 
+  getContent,
+  saveMovie,
+  deleteMovie,
+} from "../../utils/MainApi.js"
 
 function App() {
   const { pathname } = useLocation();
@@ -26,6 +34,8 @@ function App() {
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isNewEntranceOnPage, setNewEntranceOnPage] = useState(false);
+  const [savedMovies, setSavedMovies] = useState([])
+  // console.log(savedMovies);
 
   const footer =
     pathname === "/" || pathname === "/movies" || pathname === "/saved-movies";
@@ -35,38 +45,6 @@ function App() {
     pathname === "/movies" ||
     pathname === "/saved-movies" ||
     pathname === "/profile";
-
-    //Получение данных пользователя, если залогинился
-    useEffect(() => {
-      if (isLoggedIn) {
-        const token = localStorage.getItem('token');
-        getProfileInfo(token)
-          .then((dataUser) => {
-            setCurrentUser(dataUser);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    }, [isLoggedIn]);
-
-    //Проверка токена при загрузке страницы
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        getContent(token)
-          .then((res) => {
-            if (res) {
-              setLoggedIn(true);
-              // navigate('/movies', {replace: true})
-            }
-          })
-          .catch(console.error);
-      } else {
-        setLoggedIn(false);
-        localStorage.clear();
-      }
-    }, [navigate]);
 
     //Авторизация
     function handleLogin(email, password) {
@@ -120,12 +98,6 @@ function App() {
         })
         .finally(() => setLoading(false));
     }
-
-    function handleClickEditProfile() {
-      setEditingProfile(true);
-      setNewEntranceOnPage(false);
-    };
-    
     // Выход
     function handleLogout() {
       setLoggedIn(false);
@@ -134,10 +106,80 @@ function App() {
       navigate("/");
     }
 
+    //Удаление фильма
+    function handleDeleteMovie(savedMovieId) {
+      deleteMovie(savedMovieId, localStorage.token)
+        .then(() => {
+          setSavedMovies(savedMovies.filter(movie => { 
+            return movie._id !== savedMovieId 
+          }))
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+    }
+
+    // Сохранение фильма
+    function handleChangeSaveStatus(movie) {
+      const isSaved = savedMovies.some(element => movie.id === element.movieId);
+      if (!isSaved) {
+        saveMovie(movie, localStorage.token)
+          .then((res) => {
+            setSavedMovies([res, ...savedMovies])
+          })
+          .catch((err) => {
+            console.error(err);
+          })
+      } else {
+        const seachSavedMovie = savedMovies.filter((element) => {
+          return element.movieId === movie.id
+        })
+        handleDeleteMovie(seachSavedMovie[0]._id)
+      }
+    }
+
+    function handleClickEditProfile() {
+      setEditingProfile(true);
+      setNewEntranceOnPage(false);
+    };
+
     function handleEntranceOnProfile() {
       setNewEntranceOnPage(true);
-      console.log(isNewEntranceOnPage);
     }
+
+    //Получение данных пользователя, если залогинился
+    useEffect(() => {
+      if (isLoggedIn) {
+        const token = localStorage.getItem('token');
+        getProfileInfo(token)
+          .then((dataUser) => {
+            setCurrentUser(dataUser);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }, [isLoggedIn]);
+
+    //Проверка токена при загрузке страницы
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        getContent(token)
+          .then((res) => {
+            if (res) {
+              setLoggedIn(true);
+              if (pathname === "/signup" || pathname === "/signin") {
+                navigate('/movies', {replace: true})
+              }
+            }
+          })
+          .catch(console.error);
+      } else {
+        setLoggedIn(false);
+        localStorage.clear();
+      }
+    }, [navigate, pathname]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -148,11 +190,16 @@ function App() {
           <Route path="/movies" element={
             <ProtectedRouteElement loggedIn={isLoggedIn} 
               element={Movies} 
+                onChangeSave={handleChangeSaveStatus}
+                onDelete={handleDeleteMovie}
+                savedMovies={savedMovies}
             />} 
           />
           <Route path="/saved-movies" element={
             <ProtectedRouteElement loggedIn={isLoggedIn} 
               element={SavedMovies} 
+                onDelete={handleDeleteMovie}
+                savedMovies={savedMovies}
             />}
           />
           <Route path="/profile" 

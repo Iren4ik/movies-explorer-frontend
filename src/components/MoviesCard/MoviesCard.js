@@ -3,16 +3,26 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { MOVIES_API_URL } from "../../utils/constants";
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onChangeSave, onDelete, savedMovies }) {
   const { pathname } = useLocation();
-  const moviesPage = pathname === "/movies";
-  const savedMoviesPage = pathname === "/saved-movies";
 
   const [isSavedMovie, setSavedMovie] = useState(false);
+  console.log(isSavedMovie);
 
-  const handleClickSaveMovie = () => {
-    setSavedMovie(!isSavedMovie);
+  const handleSave = () => {
+    if (savedMovies.some(element => movie.id === element.movieId)) {
+      setSavedMovie(false);
+      onChangeSave(movie);
+    } else {
+      setSavedMovie(true);
+      onChangeSave(movie);
+      console.log(movie.id);
+    }
   };
+
+  const handleDelete = () => {
+    onDelete(movie._id)
+  }
 
   const convertDuration = (duration) => {
     const minutes = duration % 60;
@@ -48,26 +58,26 @@ function MoviesCard({ movie }) {
           </div>
         </div>
       </a>
-      {moviesPage && !isSavedMovie && (
+
+      {(pathname === '/movies') && (
         <button
-          className="movies-card__btn movies-card__btn_type_save"
+          className={`movies-card__btn 
+            ${!isSavedMovie
+              ? "movies-card__btn_type_save" 
+              : "movies-card__btn_type_saved"}`}
           type="button"
-          onClick={handleClickSaveMovie}
+          onClick={handleSave}
         >
-          Сохранить
+          {!isSavedMovie ? "Сохранить" : ""}
         </button>
-      )}
-      {isSavedMovie && (
-        <button
-          className="movies-card__btn movies-card__btn_type_saved"
-          type="button"
-          onClick={handleClickSaveMovie}
-        ></button>
-      )}
-      {savedMoviesPage && (
+        )
+      }
+
+      {(pathname === '/saved-movies') && (
         <button
           className="movies-card__btn movies-card__btn_type_delete"
           type="button"
+          onClick={handleDelete}
         ></button>
       )}
     </li>

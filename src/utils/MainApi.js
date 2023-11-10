@@ -1,4 +1,4 @@
-import { MAIN_API_URL } from "./constants";
+import { MAIN_API_URL, MOVIES_API_URL } from "./constants";
 
 function checkResponse(res) {
   if (res.ok) {
@@ -68,3 +68,36 @@ export const getContent = (token) => {
   .then(data => data)
 };
 
+export const saveMovie = (movie, token) => {
+  return fetch(`${MAIN_API_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization" : `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      description: movie.description,
+      year: movie.year,
+      image: `${MOVIES_API_URL}${movie.image.url}`,
+      trailerLink: movie.trailerLink,
+      thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
+      movieId: movie.id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN
+    })
+  })
+  .then(res => checkResponse(res))
+}
+
+export const deleteMovie = (movieId, token) => {
+  return fetch(`${MAIN_API_URL}/movies/${movieId}`, {
+    method: 'DELETE',
+    headers: {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+  .then(res => checkResponse(res))
+}

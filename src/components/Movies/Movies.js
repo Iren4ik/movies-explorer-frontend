@@ -11,7 +11,7 @@ import {
 } from "../../utils/constants";
 
 
-function Movies() {
+function Movies({ onChangeSave, onDelete, savedMovies }) {
   const [foundCards, setFoundCards] = useState([]);
   const [moviesForRender, setMoviesForRender] = useState([])
   const [inputSearchValue, setInputSearchValue] = useState([])
@@ -126,6 +126,9 @@ function Movies() {
       <MoviesCardList 
         movies={visibleMovies} 
         isLoading={isLoading}
+        onChangeSave={onChangeSave}
+        onDelete={onDelete}
+        savedMovies={savedMovies}
       />
       <div className="movies__btn-more-container">
         <button
