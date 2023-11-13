@@ -17,7 +17,7 @@ import {
   login, 
   updateUserInfo, 
   getProfileInfo, 
-  getContent,
+  // getContent,
   saveMovie,
   deleteMovie,
 } from "../../utils/MainApi.js"
@@ -36,6 +36,7 @@ function App() {
   const [isNewEntranceOnPage, setNewEntranceOnPage] = useState(false);
   const [savedMovies, setSavedMovies] = useState([])
   // console.log(savedMovies);
+  // console.log(currentUser);
 
   const footer =
     pathname === "/" || pathname === "/movies" || pathname === "/saved-movies";
@@ -165,16 +166,16 @@ function App() {
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
-        getContent(token)
-          .then((res) => {
-            if (res) {
+        // getContent(token)
+        //   .then((res) => {
+        //     if (res) {
               setLoggedIn(true);
               if (pathname === "/signup" || pathname === "/signin") {
                 navigate('/movies', {replace: true})
               }
-            }
-          })
-          .catch(console.error);
+            // }
+          // })
+          // .catch(console.error);
       } else {
         setLoggedIn(false);
         localStorage.clear();

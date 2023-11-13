@@ -1,13 +1,17 @@
 import "./MoviesCard.css";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MOVIES_API_URL } from "../../utils/constants";
 
 function MoviesCard({ movie, onChangeSave, onDelete, savedMovies }) {
   const { pathname } = useLocation();
 
   const [isSavedMovie, setSavedMovie] = useState(false);
-  console.log(isSavedMovie);
+
+  useEffect(() => {
+    if (pathname === '/movies')
+    setSavedMovie(savedMovies.some(element => movie.id === element.movieId))
+  }, [savedMovies, movie.id, setSavedMovie, pathname])
 
   const handleSave = () => {
     if (savedMovies.some(element => movie.id === element.movieId)) {
@@ -16,7 +20,6 @@ function MoviesCard({ movie, onChangeSave, onDelete, savedMovies }) {
     } else {
       setSavedMovie(true);
       onChangeSave(movie);
-      console.log(movie.id);
     }
   };
 

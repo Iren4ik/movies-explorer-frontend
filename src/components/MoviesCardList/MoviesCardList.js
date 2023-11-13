@@ -6,9 +6,13 @@ import { NOT_FOUND_MOVIES_ERROR } from "../../utils/constants";
 
 function MoviesCardList({ movies, isLoading, onChangeSave, savedMovies, onDelete }) {
   const { pathname } = useLocation()
+  const moviesPage = pathname === '/movies';
+  const savedMoviesPage = pathname === '/saved-movies';
+  
+
   return (
     <section className="movies-card-list">
-      {!localStorage.getItem("moviesSearchQuery") && movies.length === 0 && null}
+      {moviesPage && !localStorage.getItem("moviesSearchQuery") && movies.length === 0 && null}
 
       {isLoading && movies.length === 0 && <Preloader />}
 
@@ -16,7 +20,7 @@ function MoviesCardList({ movies, isLoading, onChangeSave, savedMovies, onDelete
         <p className="movies-card-list__not-found">{NOT_FOUND_MOVIES_ERROR}</p>
       )}
       
-      {pathname === '/movies' && movies.length !== 0 && (
+      {moviesPage && movies.length !== 0 && (
         <ul className="movies-card-list__container">
           {movies.map((movie) => {
             return (
@@ -24,7 +28,7 @@ function MoviesCardList({ movies, isLoading, onChangeSave, savedMovies, onDelete
                 key={movie.id} 
                 movie={movie} 
                 onChangeSave={onChangeSave}
-                onDelete={onDelete}
+                // onDelete={onDelete}
                 savedMovies={savedMovies}
               />
             )
@@ -32,9 +36,10 @@ function MoviesCardList({ movies, isLoading, onChangeSave, savedMovies, onDelete
         </ul>
       )}
 
-      {pathname === '/saved-movies' && movies.length !== 0 && (
+      {savedMoviesPage && movies.length !== 0 && (
         <ul className="movies-card-list__container">
           {movies.map((movie) => {
+            // console.log(movies);
             return (
               <MoviesCard 
                 key={movie._id} 

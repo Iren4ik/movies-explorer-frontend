@@ -56,17 +56,17 @@ export const getProfileInfo = (token) => {
   .then(data => data)
 };
 
-export const getContent = (token) => {
-  return fetch(`${MAIN_API_URL}/users/me`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    }
-  })
-  .then(res => checkResponse(res))
-  .then(data => data)
-};
+// export const getContent = (token) => {
+//   return fetch(`${MAIN_API_URL}/users/me`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': `Bearer ${token}`,
+//     }
+//   })
+//   .then(res => checkResponse(res))
+//   .then(data => data)
+// };
 
 export const saveMovie = (movie, token) => {
   return fetch(`${MAIN_API_URL}/movies`, {

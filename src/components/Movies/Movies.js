@@ -14,7 +14,7 @@ import {
 function Movies({ onChangeSave, onDelete, savedMovies }) {
   const [foundCards, setFoundCards] = useState([]);
   const [moviesForRender, setMoviesForRender] = useState([])
-  const [inputSearchValue, setInputSearchValue] = useState([])
+  const [inputSearchValue, setInputSearchValue] = useState('')
   const [isFilterOn, setFilter] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
