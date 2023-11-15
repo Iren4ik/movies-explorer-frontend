@@ -1,10 +1,24 @@
 import "./Profile.css";
 import { useContext, useEffect, useState } from 'react';
 import useFormWithValidation from "../../hooks/useFormWithValidation";
-import { EMAIL_REG, NAME_REG, UPDATE_PROFILE_ERROR } from "../../utils/constants";
+import {
+  EMAIL_REG,
+  NAME_REG,
+  UPDATE_PROFILE_ERROR,
+  SUCCESS_NOTIFICATION,
+} from "../../utils/constants";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ onEditProfile, onLogout, onUpdate, isLoading, updateError, isEditingProfile, isNewEntranceOnPage }) {
+function Profile({
+  onEditProfile,
+  onLogout,
+  onUpdate,
+  isLoading,
+  updateError,
+  isEditingProfile,
+  isNewEntranceOnPage,
+  success,
+}) {
 
   const { values, errors, isValid, handleChange } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
@@ -75,6 +89,7 @@ function Profile({ onEditProfile, onLogout, onUpdate, isLoading, updateError, is
               </div>
               <span className="profile__input-error">{errors.email}</span>
             </div>
+            <span className="profile__success">{success ? `${SUCCESS_NOTIFICATION}` : ''}</span>
           </div>
 
           <div className="profile__btns">

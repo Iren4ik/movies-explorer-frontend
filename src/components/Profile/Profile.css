@@ -77,6 +77,16 @@
   text-align: center;
 }
 
+.profile__success {
+  width: 100%;
+  display: block;
+  text-align: center;
+  color: #2be080;
+  font-size: 11px;
+  font-weight: 400;
+  min-height: 13px;
+}
+
 .profile__btns {
   display: flex;
   flex-direction: column;

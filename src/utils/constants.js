@@ -35,4 +35,4 @@ export const REGISTER_ERROR = 'При регистрации пользоват�
 // export const UPDATE_PROFILE_BAD_REQUEST_ERROR = 'Пользователь с таким email уже существует';
 export const UPDATE_PROFILE_ERROR = 'При обновлении профиля произошла ошибка';
 
-//Другие ошибки
+export const SUCCESS_NOTIFICATION = "Данные обновлены успешно";

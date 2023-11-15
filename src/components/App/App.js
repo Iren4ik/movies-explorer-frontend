@@ -34,7 +34,8 @@ function App() {
   const [isEditingProfile, setEditingProfile] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isNewEntranceOnPage, setNewEntranceOnPage] = useState(false);
-  const [savedMovies, setSavedMovies] = useState([])
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [success, setSuccess] = useState(false);
   // console.log(savedMovies);
   // console.log(currentUser);
 
@@ -92,9 +93,11 @@ function App() {
           setEditingProfile(false);
           setUpdateError(false);
           setCurrentUser(dataUser);
+          setSuccess(true);
         })
         .catch((err) => {
           setUpdateError(true);
+          setSuccess(false);
           console.error(err);
         })
         .finally(() => setLoading(false));
@@ -214,6 +217,7 @@ function App() {
                 updateError={updateError}
                 isEditingProfile={isEditingProfile}
                 isNewEntranceOnPage={isNewEntranceOnPage}
+                success={success}
             />}
           />
           <Route path="/signup" element={

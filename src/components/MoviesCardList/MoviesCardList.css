@@ -3,6 +3,10 @@
   margin: 80px auto 28px;
 }
 
+.movies-card-list_entrance {
+  height: 166px;
+}
+
 .movies-card-list__not-found {
   display: block;
   font-size: 26px;
