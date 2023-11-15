@@ -57,19 +57,22 @@ function Movies({ onChangeSave, onDelete, savedMovies }) {
   // включение фильтрации
   const handleOnFilterClick = useCallback((isFilterOn) => {
     setFilter(isFilterOn);
+    const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));
+    const allMovies = JSON.parse(localStorage.getItem("allMovies"));
+    const found = search(allMovies, searchQuery);
+    setFoundCards(found);
     if (localStorage.getItem("moviesSearchQuery")) {
       if (isFilterOn) {
         const filtered = filter(foundCards, isFilterOn);
         setMoviesForRender(filtered);
         localStorage.setItem("foundMovies", JSON.stringify(filtered));
         localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+        // console.log(foundCards)
       } else {
-        const allMovies = JSON.parse(localStorage.getItem("allMovies"));
-        const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));;
-        const found = search(allMovies, searchQuery);
         setMoviesForRender(found);
         localStorage.setItem("foundMovies", JSON.stringify(found));
         localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+        // console.log('off')
       }
     }
   }, [foundCards])

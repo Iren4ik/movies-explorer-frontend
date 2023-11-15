@@ -11,9 +11,9 @@ function SavedMovies({onDelete, savedMovies}) {
   const [inputSearchValue, setInputSearchValue] = useState('');
   const [firstEntrance, setFirstEntrance] = useState(true);
   // console.log(moviesForRender);
-  console.log(savedMovies);
-  console.log(foundCards);
-  console.log(firstEntrance);
+  // console.log(savedMovies);
+  // console.log(foundCards);
+  // console.log(firstEntrance);
 
   useEffect(() => {
     setMoviesForRender(savedMovies);
