@@ -17,6 +17,7 @@ import {
   login, 
   updateUserInfo, 
   getProfileInfo, 
+  getMovies,
   // getContent,
   saveMovie,
   deleteMovie,
@@ -152,16 +153,28 @@ function App() {
     }
 
     //Получение данных пользователя, если залогинился
+    // useEffect(() => {
+    //   if (isLoggedIn) {
+    //     const token = localStorage.getItem('token');
+    //     getProfileInfo(token)
+    //       .then((dataUser) => {
+    //         setCurrentUser(dataUser);
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   }
+    // }, [isLoggedIn]);
+
     useEffect(() => {
       if (isLoggedIn) {
         const token = localStorage.getItem('token');
-        getProfileInfo(token)
-          .then((dataUser) => {
-            setCurrentUser(dataUser);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        Promise.all([getProfileInfo(token), getMovies(token)])
+        .then(([dataUser, dataCards]) => {
+          setCurrentUser(dataUser);
+          setSavedMovies(dataCards);
+        })
+        .catch(console.error);
       }
     }, [isLoggedIn]);
 
