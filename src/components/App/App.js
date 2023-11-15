@@ -49,6 +49,9 @@ function App() {
     pathname === "/saved-movies" ||
     pathname === "/profile";
 
+  const registerPage = pathname === "/signup"
+  const loginPage = pathname === "/signin"
+
     //Авторизация
     function handleLogin(email, password) {
       setLoading(true);
@@ -182,21 +185,21 @@ function App() {
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
-        // getContent(token)
-        //   .then((res) => {
-        //     if (res) {
-              setLoggedIn(true);
-              if (pathname === "/signup" || pathname === "/signin") {
-                navigate('/movies', {replace: true})
-              }
-            // }
-          // })
-          // .catch(console.error);
+        setLoggedIn(true);
+        // if (pathname === "/signup" || pathname === "/signin") {
+        //   navigate('/movies', {replace: true})
+        // }
       } else {
         setLoggedIn(false);
         localStorage.clear();
       }
-    }, [navigate, pathname]);
+    }, [pathname, navigate]);
+
+    useEffect(() => {
+      if (isLoggedIn && (registerPage || loginPage)) {
+        navigate("/movies");
+      }
+    }, [navigate, isLoggedIn, pathname, registerPage, loginPage]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
