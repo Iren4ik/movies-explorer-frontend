@@ -35,7 +35,7 @@ function Profile({
     e.preventDefault();
     onUpdate(values);
   }
-  console.log(isEditingProfile);
+  // console.log(isEditingProfile);
 
   return (
     <main className="profile">

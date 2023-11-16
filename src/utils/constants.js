@@ -1,5 +1,6 @@
 export const MOVIES_API_URL = "https://api.nomoreparties.co";
-export const MAIN_API_URL = "http://localhost:3000";
+// export const MAIN_API_URL = "http://localhost:3000";
+export const MAIN_API_URL = "https://api.movies.nomoredomainsrocks.ru";
 
 export const SHORT_FILM = 40;
 
@@ -24,15 +25,12 @@ export const SEARCH_QUERY_ERROR = 'Нужно ввести ключевое сл
 export const NOT_FOUND_MOVIES_ERROR = 'Ничего не найдено';
 
 //Ошибки страницы логина пользователя
-// export const UNAUTHORIZED_ERROR = 'Вы ввели неправильный логин или пароль';
 export const LOGIN_ERROR = 'При авторизации произошла ошибка';
 
 //Ошибки страницы регистрации пользователя
-// export const CONFLICT_ERROR = 'Пользователь с таким email уже существует';
 export const REGISTER_ERROR = 'При регистрации пользователя произошла ошибка';
 
 //Ошибки страницы обновления профиля
-// export const UPDATE_PROFILE_BAD_REQUEST_ERROR = 'Пользователь с таким email уже существует';
 export const UPDATE_PROFILE_ERROR = 'При обновлении профиля произошла ошибка';
 
 export const SUCCESS_NOTIFICATION = "Данные обновлены успешно";
