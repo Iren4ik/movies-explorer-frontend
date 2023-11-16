@@ -3,7 +3,14 @@ import { useState, useEffect } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { SEARCH_SERVER_ERROR, SEARCH_QUERY_ERROR } from "../../utils/constants";
 
-function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoading, serverError }) {
+function SearchForm({ 
+    onSearch, 
+    inputValue, 
+    isFilterOn, 
+    onFilterChange, 
+    isLoading, 
+    serverError,
+  }) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchError, setSearchError] = useState("");
 
@@ -49,7 +56,10 @@ function SearchForm({ onSearch, inputValue, isFilterOn, onFilterChange, isLoadin
           </button>
         </div>
         <div className="search__filter-container">
-          <FilterCheckbox isFilterOn={isFilterOn} onFilterChange={onFilterChange} />
+          <FilterCheckbox 
+            isFilterOn={isFilterOn} 
+            onFilterChange={onFilterChange} 
+          />
           <p className="search__filter-title">Короткометражки</p>
         </div>
       </form>

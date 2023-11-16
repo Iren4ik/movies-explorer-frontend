@@ -9,7 +9,7 @@ function SavedMovies({onDelete, savedMovies}) {
   const [foundCards, setFoundCards] = useState([]);
   const [isFilterOn, setFilter] = useState(false);
   const [inputSearchValue, setInputSearchValue] = useState('');
-  const [firstEntrance, setFirstEntrance] = useState(true);
+  const [firstSavedEntrance, setFirstSavedEntrance] = useState(true);
   // console.log(moviesForRender);
   // console.log(savedMovies);
   // console.log(foundCards);
@@ -21,9 +21,9 @@ function SavedMovies({onDelete, savedMovies}) {
 
   useEffect(() => {
     if (savedMovies.length === 0) {
-      setFirstEntrance(true);
+      setFirstSavedEntrance(true);
     } else {
-      setFirstEntrance(false);
+      setFirstSavedEntrance(false);
     }
   }, [savedMovies])
 
@@ -40,13 +40,13 @@ function SavedMovies({onDelete, savedMovies}) {
 
   // Отправка запроса на поиск
   const handleSubmitSearchRequest = useCallback((searchQuery) => {
+    setFirstSavedEntrance(false);
     searchAndFilterMovies(savedMovies, searchQuery, isFilterOn);
   }, [searchAndFilterMovies, savedMovies, isFilterOn]);
 
   // включение фильтрации
   const handleOnFilterClick = useCallback((isFilterOn) => {
     setFilter(isFilterOn);
-    console.log('nen');
     if (!foundCards.length) {
       if (isFilterOn) {
         const filtered = filter(savedMovies, isFilterOn);
@@ -68,20 +68,10 @@ function SavedMovies({onDelete, savedMovies}) {
     }
   }, [foundCards, savedMovies])
 
-  // useEffect(() => {
-  //   if (savedMovies.length === 0) {
-  //     setFirstEntrance(true)
-  //   } else {
-  //     setFirstEntrance(false)
-  //   }
-    // searchAndFilterMovies(savedMovies, searchQuery, isFilterOn);
-  // }, [])
-
   return (
     <main className="saved-movies">
       <SearchForm 
-        onSearch={handleSubmitSearchRequest} 
-        // movies={moviesForRender} 
+        onSearch={handleSubmitSearchRequest}
         inputValue={inputSearchValue} 
         isFilterOn={isFilterOn}
         onFilterChange={handleOnFilterClick}
@@ -90,7 +80,7 @@ function SavedMovies({onDelete, savedMovies}) {
       <MoviesCardList 
         movies={moviesForRender}
         onDelete={onDelete}
-        firstEntrance={firstEntrance}
+        firstSavedEntrance={firstSavedEntrance}
       />
     </main>
   );

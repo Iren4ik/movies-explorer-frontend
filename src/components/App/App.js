@@ -11,6 +11,7 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
+import Preloader from "../Preloader/Preloader";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { 
   register, 
@@ -37,6 +38,7 @@ function App() {
   const [isNewEntranceOnPage, setNewEntranceOnPage] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [success, setSuccess] = useState(false);
+  const [isCheckToken, setIsCheckToken] = useState(true)
   // console.log(savedMovies);
   // console.log(currentUser);
 
@@ -146,29 +148,20 @@ function App() {
       }
     }
 
+    // Открытие редактирования профиля
     function handleClickEditProfile() {
       setEditingProfile(true);
       setNewEntranceOnPage(false);
+      setSuccess(false);
     };
 
+    // После открытия редактирования при клике  на "Аккаунт" происходит выход из редактора
     function handleEntranceOnProfile() {
       setNewEntranceOnPage(true);
+      setEditingProfile(false);
     }
 
     //Получение данных пользователя, если залогинился
-    // useEffect(() => {
-    //   if (isLoggedIn) {
-    //     const token = localStorage.getItem('token');
-    //     getProfileInfo(token)
-    //       .then((dataUser) => {
-    //         setCurrentUser(dataUser);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   }
-    // }, [isLoggedIn]);
-
     useEffect(() => {
       if (isLoggedIn) {
         const token = localStorage.getItem('token');
@@ -176,8 +169,10 @@ function App() {
         .then(([dataUser, dataCards]) => {
           setCurrentUser(dataUser);
           setSavedMovies(dataCards);
+          // setIsCheckToken(false)
         })
         .catch(console.error);
+        // setIsCheckToken(false)
       }
     }, [isLoggedIn]);
 
@@ -185,15 +180,20 @@ function App() {
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
-        setLoggedIn(true);
-        // if (pathname === "/signup" || pathname === "/signin") {
-        //   navigate('/movies', {replace: true})
-        // }
+        getProfileInfo(token)
+        .then((res) => {
+          if(res) {
+            setLoggedIn(true);
+          }
+        })
+        .catch(console.error)
+        .finally(() => setIsCheckToken(false))
       } else {
         setLoggedIn(false);
         localStorage.clear();
+        setIsCheckToken(false);
       }
-    }, [pathname, navigate]);
+    }, []);
 
     useEffect(() => {
       if (isLoggedIn && (registerPage || loginPage)) {
@@ -202,59 +202,64 @@ function App() {
     }, [navigate, isLoggedIn, pathname, registerPage, loginPage]);
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="App">
-        {header && <Header isLoggedIn={isLoggedIn} newEntrance={handleEntranceOnProfile}/>}
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/movies" element={
-            <ProtectedRouteElement loggedIn={isLoggedIn} 
-              element={Movies} 
-                onChangeSave={handleChangeSaveStatus}
-                onDelete={handleDeleteMovie}
-                savedMovies={savedMovies}
-            />} 
-          />
-          <Route path="/saved-movies" element={
-            <ProtectedRouteElement loggedIn={isLoggedIn} 
-              element={SavedMovies} 
-                onDelete={handleDeleteMovie}
-                savedMovies={savedMovies}
-            />}
-          />
-          <Route path="/profile" 
-          element={
-            <ProtectedRouteElement loggedIn={isLoggedIn} 
-              element={Profile}
-                onEditProfile={handleClickEditProfile}
-                onLogout={handleLogout}
-                onUpdate={handleUpdateUser}
+    <div className="app__content">
+      {isCheckToken 
+      ? (<Preloader />) 
+      : (<CurrentUserContext.Provider value={currentUser}>
+        <div className="App">
+          {header && <Header isLoggedIn={isLoggedIn} newEntrance={handleEntranceOnProfile}/>}
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/movies" element={
+              <ProtectedRouteElement loggedIn={isLoggedIn} 
+                element={Movies} 
+                  onChangeSave={handleChangeSaveStatus}
+                  onDelete={handleDeleteMovie}
+                  savedMovies={savedMovies}
+              />} 
+            />
+            <Route path="/saved-movies" element={
+              <ProtectedRouteElement loggedIn={isLoggedIn} 
+                element={SavedMovies} 
+                  onDelete={handleDeleteMovie}
+                  savedMovies={savedMovies}
+              />}
+            />
+            <Route path="/profile" 
+            element={
+              <ProtectedRouteElement loggedIn={isLoggedIn} 
+                element={Profile}
+                  onEditProfile={handleClickEditProfile}
+                  onLogout={handleLogout}
+                  onUpdate={handleUpdateUser}
+                  isLoading={isLoading}
+                  updateError={updateError}
+                  isEditingProfile={isEditingProfile}
+                  isNewEntranceOnPage={isNewEntranceOnPage}
+                  success={success}
+              />}
+            />
+            <Route path="/signup" element={
+              <Register 
+                onRegister={handleRegister} 
                 isLoading={isLoading}
-                updateError={updateError}
-                isEditingProfile={isEditingProfile}
-                isNewEntranceOnPage={isNewEntranceOnPage}
-                success={success}
-            />}
-          />
-          <Route path="/signup" element={
-            <Register 
-              onRegister={handleRegister} 
-              isLoading={isLoading}
-              registerError={registerError}
-            />
-          } />
-          <Route path="/signin" element={
-            <Login 
-              onLogin={handleLogin} 
-              isLoading={isLoading}
-              loginError={loginError}
-            />
-          } />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        {footer && <Footer />}
-      </div>
-    </CurrentUserContext.Provider>
+                registerError={registerError}
+              />
+            } />
+            <Route path="/signin" element={
+              <Login 
+                onLogin={handleLogin} 
+                isLoading={isLoading}
+                loginError={loginError}
+              />
+            } />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+          {footer && <Footer />}
+        </div>
+      </CurrentUserContext.Provider>
+    )}
+    </div>
   );
 }
 

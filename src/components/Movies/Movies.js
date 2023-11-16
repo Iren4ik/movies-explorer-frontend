@@ -8,6 +8,7 @@ import {
   L_SIZE_SCREEN,
   M_SIZE_SCREEN,
   S_SIZE_SCREEN,
+  // SEARCH_FILTER_ERROR,
 } from "../../utils/constants";
 
 
@@ -19,6 +20,9 @@ function Movies({ onChangeSave, onDelete, savedMovies }) {
   const [isLoading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
   const [count, setCount] = useState(renderMoreMovies().initial);
+  const [firstEntrance, setFirstEntrance] = useState(true);
+  // const [filterError, setFilterError] = useState('');
+  console.log(firstEntrance);
 
   const visibleMovies = moviesForRender.slice(0, count);
 
@@ -35,6 +39,7 @@ function Movies({ onChangeSave, onDelete, savedMovies }) {
 
   // запрос на получение фильмов
   const handleSubmitSearchRequest = useCallback((searchQuery) => {
+  setFirstEntrance(false);
   const storedAllMovies = localStorage.getItem("allMovies");
     if (!storedAllMovies) {
       setLoading(true);
@@ -56,26 +61,28 @@ function Movies({ onChangeSave, onDelete, savedMovies }) {
 
   // включение фильтрации
   const handleOnFilterClick = useCallback((isFilterOn) => {
-    setFilter(isFilterOn);
-    const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));
-    const allMovies = JSON.parse(localStorage.getItem("allMovies"));
-    const found = search(allMovies, searchQuery);
-    setFoundCards(found);
-    if (localStorage.getItem("moviesSearchQuery")) {
-      if (isFilterOn) {
-        const filtered = filter(foundCards, isFilterOn);
-        setMoviesForRender(filtered);
-        localStorage.setItem("foundMovies", JSON.stringify(filtered));
-        localStorage.setItem("filterState", JSON.stringify(isFilterOn));
-        // console.log(foundCards)
-      } else {
-        setMoviesForRender(found);
-        localStorage.setItem("foundMovies", JSON.stringify(found));
-        localStorage.setItem("filterState", JSON.stringify(isFilterOn));
-        // console.log('off')
+    if (!firstEntrance) {
+      setFilter(isFilterOn);
+      const searchQuery = JSON.parse(localStorage.getItem("moviesSearchQuery"));
+      const allMovies = JSON.parse(localStorage.getItem("allMovies"));
+      const found = search(allMovies, searchQuery);
+      setFoundCards(found);
+      if (localStorage.getItem("moviesSearchQuery")) {
+        if (isFilterOn) {
+          const filtered = filter(foundCards, isFilterOn);
+          setMoviesForRender(filtered);
+          localStorage.setItem("foundMovies", JSON.stringify(filtered));
+          localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+        } else {
+          setMoviesForRender(found);
+          localStorage.setItem("foundMovies", JSON.stringify(found));
+          localStorage.setItem("filterState", JSON.stringify(isFilterOn));
+        }
       }
+    } else {
+      setFilter(isFilterOn);
     }
-  }, [foundCards])
+  }, [foundCards, firstEntrance])
 
   function openMoreMovies() {
     setCount(count + renderMoreMovies().increase);
@@ -113,6 +120,14 @@ function Movies({ onChangeSave, onDelete, savedMovies }) {
       setInputSearchValue(queryFromLStorage);
       setMoviesForRender(moviesFromLStorage);
       setFilter(filterStateFromLStorage);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!localStorage.getItem("allMovies")) {
+      setFirstEntrance(true);
+    } else {
+      setFirstEntrance(false);
     }
   }, [])
 
