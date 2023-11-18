@@ -19,7 +19,6 @@ function Movies({ onChangeSave, onDelete, savedMovies }) {
   const [serverError, setServerError] = useState(false);
   const [count, setCount] = useState(renderMoreMovies().initial);
   const [firstEntrance, setFirstEntrance] = useState(true);
-  console.log(firstEntrance);
 
   const visibleMovies = moviesForRender.slice(0, count);
 

@@ -10,9 +10,11 @@ function SavedMovies({ onDelete, savedMovies }) {
   const [isFilterOn, setFilter] = useState(false);
   const [inputSearchValue, setInputSearchValue] = useState("");
   const [firstSavedEntrance, setFirstSavedEntrance] = useState(true);
+  console.log(foundCards);
+  console.log(inputSearchValue);
 
   useEffect(() => {
-    setMoviesForRender(savedMovies);
+      setMoviesForRender(savedMovies);
   }, [savedMovies]);
 
   useEffect(() => {
@@ -52,24 +54,26 @@ function SavedMovies({ onDelete, savedMovies }) {
         if (isFilterOn) {
           const filtered = filter(savedMovies, isFilterOn);
           setMoviesForRender(filtered);
-          console.log("выводим сохраненные короткометражки");
         } else {
           setMoviesForRender(savedMovies);
-          console.log("выводим сохраненные все");
         }
       } else {
         if (isFilterOn) {
           const filtered = filter(foundCards, isFilterOn);
           setMoviesForRender(filtered);
-          console.log("выводим короткометражки по запросу");
         } else {
           setMoviesForRender(foundCards);
-          console.log("выводим запрос");
         }
       }
     },
     [foundCards, savedMovies],
   );
+
+  useEffect(() => {
+    if (foundCards.length) {
+      searchAndFilterMovies(savedMovies, inputSearchValue, isFilterOn);
+    }
+  }, [savedMovies, foundCards.length, inputSearchValue, isFilterOn, searchAndFilterMovies]);
 
   return (
     <main className="saved-movies">
