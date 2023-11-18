@@ -20,13 +20,18 @@ function Profile({
   success,
 }) {
 
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+  const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
   const [btnDisabled, setBtnDisabled] = useState(false);
 
+  // При редактировании заполнение полей текущими данными
+  useEffect(() => {
+    resetForm({ name: currentUser.name, email: currentUser.email })
+  }, [resetForm, currentUser, isEditingProfile]);
+
   //Если новые данные не измненились, кнопка не активна
   useEffect(() => {
-    currentUser.name !== values.name || currentUser.email !== values.email
+    currentUser.name !== values.name && currentUser.email !== values.email
       ? setBtnDisabled(false)
       : setBtnDisabled(true);
   }, [currentUser, values]);
@@ -63,7 +68,7 @@ function Profile({
                   maxLength="30"
                   disabled={!isEditingProfile || isNewEntranceOnPage}
                   pattern={NAME_REG}
-                  value={!isEditingProfile ? currentUser.name : (values.name || "")}
+                  value={values.name || ""}
                   onChange={handleChange}
                   required
                 />
@@ -83,7 +88,7 @@ function Profile({
                   placeholder="Укажите e-mail"
                   disabled={!isEditingProfile || isNewEntranceOnPage}
                   pattern={EMAIL_REG}
-                  value={!isEditingProfile ? currentUser.email : (values.email || "")}
+                  value={values.email || ""}
                   onChange={handleChange}
                   required
                 />

@@ -158,6 +158,7 @@ function App() {
   function handleEntranceOnProfile() {
     setNewEntranceOnPage(true);
     setEditingProfile(false);
+    setSuccess(false);
   }
 
   //Получение данных пользователя, если залогинился
