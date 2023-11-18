@@ -10,8 +10,6 @@ function SavedMovies({ onDelete, savedMovies }) {
   const [isFilterOn, setFilter] = useState(false);
   const [inputSearchValue, setInputSearchValue] = useState("");
   const [firstSavedEntrance, setFirstSavedEntrance] = useState(true);
-  console.log(foundCards);
-  console.log(inputSearchValue);
 
   useEffect(() => {
       setMoviesForRender(savedMovies);
