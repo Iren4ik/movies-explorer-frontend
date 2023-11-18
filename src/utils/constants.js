@@ -14,7 +14,7 @@ export const INIT_FOR_S_SCREEN = 5;
 
 export const INC_FOR_L_SCREEN = 3;
 export const INC_FOR_M_SCREEN = 2;
-export const INC_FOR_S_SCREEN = 1;
+export const INC_FOR_S_SCREEN = 2;
 
 export const EMAIL_REG = "^\\S+@\\S+\\.\\S+$";
 export const NAME_REG = "^[A-Za-zА-Яа-яЁё\\-\\s]+$";
