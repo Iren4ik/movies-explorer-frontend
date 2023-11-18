@@ -10,6 +10,8 @@ function SavedMovies({ onDelete, savedMovies }) {
   const [isFilterOn, setFilter] = useState(false);
   const [inputSearchValue, setInputSearchValue] = useState("");
   const [firstSavedEntrance, setFirstSavedEntrance] = useState(true);
+  console.log(foundCards);
+  console.log(inputSearchValue);
 
   useEffect(() => {
       setMoviesForRender(savedMovies);
@@ -49,11 +51,9 @@ function SavedMovies({ onDelete, savedMovies }) {
     (isFilterOn) => {
       setFilter(isFilterOn);
       if (!foundCards.length) {
-        if (isFilterOn) {
+        if (!inputSearchValue) {
           const filtered = filter(savedMovies, isFilterOn);
           setMoviesForRender(filtered);
-        } else {
-          setMoviesForRender(savedMovies);
         }
       } else {
         if (isFilterOn) {
@@ -64,7 +64,7 @@ function SavedMovies({ onDelete, savedMovies }) {
         }
       }
     },
-    [foundCards, savedMovies],
+    [foundCards, savedMovies, inputSearchValue],
   );
 
   useEffect(() => {
