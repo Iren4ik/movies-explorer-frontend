@@ -28,5 +28,3 @@ function ProfileLink({ onClick }) {
 }
 
 export default ProfileLink;
-
-// className={location.pathname === "/" ? "header header_pink" : "header"}

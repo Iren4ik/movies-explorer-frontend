@@ -6,7 +6,7 @@ import ProfileLink from "../ProfileLink/ProfileLink";
 import AuthLinks from "../AuthLinks/AuthLinks";
 import Logo from "../Logo/Logo";
 
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, newEntrance }) {
   const { pathname } = useLocation();
   const [menu, setMenu] = useState(false);
 
@@ -14,8 +14,13 @@ function Header({ isLoggedIn }) {
     setMenu(!menu);
   }
 
+  function handleOpenProfile() {
+    setMenu(!menu);
+    newEntrance();
+  }
+
   const headerMenu =
-    // pathname === "/" ||
+    pathname === "/" ||
     pathname === "/movies" ||
     pathname === "/saved-movies" ||
     pathname === "/profile";
@@ -42,7 +47,7 @@ function Header({ isLoggedIn }) {
               >
                 <div className="header__menu">
                   <Navigation onClick={handleOpenMenu} />
-                  <ProfileLink onClick={handleOpenMenu}/>
+                  <ProfileLink onClick={handleOpenProfile}/>
                 </div>
               </div>
             </div>
@@ -63,7 +68,7 @@ function Header({ isLoggedIn }) {
             ></button>
           </>
         )}
-        {isLoggedIn && pathname === "/" && <AuthLinks />}
+        {!isLoggedIn && pathname === "/" && <AuthLinks />}
       </div>
     </header>
   );

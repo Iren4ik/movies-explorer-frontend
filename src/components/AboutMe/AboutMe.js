@@ -2,7 +2,8 @@ import "./AboutMe.css";
 import SectionHeader from "../SectionHeader/SectionHeader";
 import avatar from "../../images/avatar.jpeg";
 
-function AboutMe({ user }) {
+function AboutMe() {
+
   function calculateAge() {
     const birthDate = new Date(1998, 10, 8);
     const now = new Date();
@@ -19,7 +20,7 @@ function AboutMe({ user }) {
       <SectionHeader title="Студент" />
       <div className="about-me__container">
         <div className="about-me__info-container">
-          <h3 className="about-me__name">{user.name}</h3>
+          <h3 className="about-me__name">Ирена</h3>
           <p className="about-me__profession">
             Фронтенд-разработчик, {calculateAge()} лет
           </p>
